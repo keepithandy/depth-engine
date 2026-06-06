@@ -14,7 +14,7 @@ It is designed as a starter foundation for small browser RPGs: simple to run, ea
 ## Current Prototype Status
 
 - The current loaded example is Rat Cellar.
-- The combat loop, XP gain, currency, loot, equipment, selling, save, export/import, and reset flows are working.
+- The stage-based combat loop, XP gain, currency, loot, equipment, selling, save, export/import, and reset flows are working.
 - This repo is still a prototype foundation, not a full content pack.
 - The current focus is engine identity, documentation, and repo structure.
 
@@ -52,13 +52,15 @@ It is designed as a starter foundation for small browser RPGs: simple to run, ea
 The engine stays generic. Example content defines the playable theme the engine consumes.
 
 - `js/engine/` handles state, combat, loot, inventory, saves, and rendering.
-- `examples/rat-cellar/game.config.js` sets the title, currency label, floor cap, save key, and base player stats.
+- `examples/rat-cellar/game.config.js` sets the title, currency label, stage cap, save key, and base player stats.
 - `examples/rat-cellar/items.js` defines equipment and sellable items.
 - `examples/rat-cellar/enemies.js` defines encounters, rewards, and loot tables.
-- `examples/rat-cellar/zones.js` maps floors to zone names and enemy ids.
-- `js/engine/content-loader.js` records which example is currently loaded.
+- `examples/rat-cellar/zones.js` maps stages to zone names and enemy ids.
+- `js/engine/content-loader.js` exposes generic helpers for the currently loaded example.
 
 These files are the main place to build a new RPG theme without rewriting the engine.
+
+IdleForge engine code uses `currentStage` and `maxStage` for progression. Example content can present stages as floors, waves, rooms, jobs, days, areas, or another label that fits the game.
 
 ## Loaded Example
 
@@ -77,10 +79,10 @@ For more detail, see:
 
 If you want to make a new RPG theme, start here:
 
-1. Edit `examples/rat-cellar/game.config.js` to change the example title, currency name, and floor cap.
+1. Edit `examples/rat-cellar/game.config.js` to change the example title, currency name, stage label, and stage cap.
 2. Edit `examples/rat-cellar/items.js` to replace the item list.
 3. Edit `examples/rat-cellar/enemies.js` to replace the encounter list.
-4. Edit `examples/rat-cellar/zones.js` to rename the floor map.
+4. Edit `examples/rat-cellar/zones.js` to rename the stage map.
 5. Refresh the browser and test a few fights.
 6. Use Reset Save if you want a clean run.
 
@@ -105,7 +107,7 @@ Before opening a change, run the test checklist in `CONTRIBUTING.md`.
 - Only one demo theme is loaded right now.
 - There is no build system.
 - There is no plugin system yet.
-- There is no save migration layer yet.
+- There is a small save repair path, not a formal migration framework yet.
 - There is no formal multi-example switcher yet.
 - The project is intentionally small and focused on the starter engine loop.
 

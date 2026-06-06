@@ -12,7 +12,7 @@
       <div>
         <p class="eyebrow">IdleForge RPG Engine</p>
         <h1>IdleForge RPG Engine</h1>
-        <p class="subtitle">Current loaded example: Rat Cellar. Clear Floor 20 to finish the run.</p>
+        <p class="subtitle"><span id="loadedExampleText">Loaded Example: Example Content</span>. Clear Stage <span id="goalStageHeadline">-</span> to finish the run.</p>
       </div>
       <div class="save-actions">
         <button id="exportSaveBtn" type="button">Export Save</button>
@@ -43,15 +43,15 @@
         </div>
         <div class="progress">
           <div class="progress-label">
-            <span>Goal / Max Floor</span>
-            <span id="floorText"></span>
+            <span>Goal Stage</span>
+            <span id="stageText"></span>
           </div>
-          <div class="bar"><div id="floorBar" class="bar-fill floor"></div></div>
+          <div class="bar"><div id="stageBar" class="bar-fill stage"></div></div>
         </div>
       </article>
 
       <article class="panel encounter-panel">
-        <h2>Current Floor</h2>
+        <h2>Current Stage</h2>
         <div id="enemyPreview" class="preview-card"></div>
         <div class="combat-actions">
           <button id="fightBtn" type="button" class="primary">Fight</button>
@@ -67,7 +67,7 @@
       </article>
     </section>
   </main>
-  <footer class="app-footer">Loaded example: Rat Cellar. Edit examples/rat-cellar or add a new folder under examples/ to build your own RPG.</footer>
+  <footer class="app-footer"><span id="footerLoadedExample">Loaded Example: Example Content</span>. Edit <span id="footerExamplePath">examples/</span> or add a new folder under examples/ to build your own RPG.</footer>
 
   <script src="js/engine/content-loader.js"></script>
   <script src="examples/rat-cellar/game.config.js"></script>

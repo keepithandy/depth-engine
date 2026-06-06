@@ -1,10 +1,16 @@
 window.render = function render() {
   const state = window.GameState;
-  const enemy = window.getEnemyForFloor(state.floor);
+  const enemy = window.getEnemyForStage(state.currentStage);
   const stats = window.getTotalPlayerStats();
   const xpThreshold = window.getXpThreshold(state.player.level);
+  const activeExample = window.getActiveExample();
+  const stageLabel = window.getStageLabel();
 
   document.title = window.GAME_CONFIG.title;
+  document.getElementById("loadedExampleText").textContent = `Loaded Example: ${activeExample.name}`;
+  document.getElementById("goalStageHeadline").textContent = state.maxStage;
+  document.getElementById("footerLoadedExample").textContent = `Loaded Example: ${activeExample.name}`;
+  document.getElementById("footerExamplePath").textContent = activeExample.path;
   document.getElementById("playerStats").innerHTML = [
     ["Level", state.player.level],
     ["HP", `${state.player.hp} / ${state.player.maxHp}`],
@@ -15,18 +21,18 @@ window.render = function render() {
 
   document.getElementById("xpText").textContent = `${state.player.xp} / ${xpThreshold}`;
   document.getElementById("xpBar").style.width = `${Math.min(100, (state.player.xp / xpThreshold) * 100)}%`;
-  document.getElementById("floorText").textContent = state.completed
-    ? `Cleared Floor ${window.GAME_CONFIG.maxFloor}`
-    : `${state.floor} / ${window.GAME_CONFIG.maxFloor}`;
-  document.getElementById("floorBar").style.width = `${(state.floor / window.GAME_CONFIG.maxFloor) * 100}%`;
-  const zone = window.getZoneByFloor(state.floor);
+  document.getElementById("stageText").textContent = state.completed
+    ? `Cleared ${stageLabel} ${state.maxStage}`
+    : `${state.currentStage} / ${state.maxStage}`;
+  document.getElementById("stageBar").style.width = `${(state.currentStage / state.maxStage) * 100}%`;
+  const zone = window.getZoneByStage(state.currentStage);
   document.getElementById("zoneText").textContent = zone ? `${zone.title}` : "Unknown Zone";
 
   document.getElementById("enemyPreview").innerHTML = `
     <div class="enemy-card">
       <div class="details">
         <strong>${enemy.name}</strong>
-        <span class="muted">Floor ${state.floor} · ${zone?.title || "Unknown Zone"}</span>
+        <span class="muted">${stageLabel} ${state.currentStage} · ${zone?.title || "Unknown Zone"}</span>
         <span>HP ${enemy.hp} · ATK ${enemy.attack} · DEF ${enemy.defense}</span>
         <span>Rewards: ${enemy.xp} XP, ${enemy.currency} ${window.GAME_CONFIG.currencyName}</span>
       </div>

@@ -29,13 +29,17 @@ Examples:
 - enemy
 - item
 - zone
-- floor
+- stage
+- currentStage
+- maxStage
 - inventory
 - equipment
 - save
 - reward
 
 Avoid theme-specific labels inside engine code.
+
+Stages are the generic progression unit. A future example can present stages as floors, waves, rooms, jobs, days, areas, or another RPG structure without changing core engine logic.
 
 ## Small Examples Over Giant Demos
 

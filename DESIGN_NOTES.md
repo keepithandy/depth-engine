@@ -21,7 +21,7 @@ Example content lives in `examples/`. It should define the sample theme, item na
 
 - One shared engine.
 - Two sample zones.
-- Floor-based combat progression.
+- Stage-based combat progression.
 - Simple equipment and inventory.
 - Autosave, export, import, and reset support.
 - Direct `index.html` startup without a server.

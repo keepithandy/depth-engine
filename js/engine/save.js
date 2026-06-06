@@ -1,18 +1,25 @@
 window.normalizeSaveState = function normalizeSaveState(data) {
   const base = window.createNewState();
   const source = data && typeof data === "object" ? data : {};
+  // Legacy saves may contain floor/currentFloor/maxFloor; repair them into stage fields.
+  const { currentFloor, floor, maxFloor, ...sourceWithoutLegacyStage } = source;
   const player = { ...window.GAME_CONFIG.basePlayer, ...(source.player || {}) };
-  const floor = Number.isFinite(Number(source.floor)) ? Math.min(Math.max(1, Math.floor(Number(source.floor))), window.GAME_CONFIG.maxFloor) : base.floor;
+  const maxStageSource = source.maxStage ?? maxFloor ?? base.maxStage;
+  const maxStageValue = Number(maxStageSource);
+  const maxStage = Number.isFinite(maxStageValue) ? Math.max(1, Math.floor(maxStageValue)) : base.maxStage;
+  const stageSource = source.currentStage ?? currentFloor ?? floor ?? base.currentStage;
+  const currentStage = window.clampStage(stageSource, maxStage);
   return {
     ...base,
-    ...source,
+    ...sourceWithoutLegacyStage,
     player,
-    floor,
+    currentStage,
+    maxStage,
     equipment: { weapon: null, head: null, body: null, feet: null, offhand: null, trinket: null, ...(source.equipment || {}) },
     inventory: Array.isArray(source.inventory) ? source.inventory.filter((id) => typeof id === "string") : [],
     log: Array.isArray(source.log) ? source.log.filter((entry) => typeof entry === "string") : base.log,
-    completed: Boolean(source.completed) && floor >= window.GAME_CONFIG.maxFloor,
-    version: Math.max(2, Number(source.version) || 0)
+    completed: Boolean(source.completed) && currentStage >= maxStage,
+    version: Math.max(3, Number(source.version) || 0)
   };
 };
 

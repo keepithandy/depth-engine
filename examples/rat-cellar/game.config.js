@@ -1,10 +1,20 @@
 // Example game config for the currently loaded sample content.
 // Keep the engine title generic and let the example only define data values.
+window.ACTIVE_EXAMPLE = {
+  id: "rat-cellar",
+  name: "Rat Cellar",
+  path: "examples/rat-cellar"
+};
+
 window.GAME_CONFIG = {
   title: "IdleForge RPG Engine",
   currencyName: "Coins",
-  maxFloor: 20,
+  // maxStage is this example's progression cap; the engine tracks currentStage.
+  maxStage: 20,
+  stageLabel: "Stage",
   saveKey: "idleforge-demo-save-v2",
+  startLog: "Rat Cellar example loaded. Begin at Stage 1.",
+  completionLog: "Rat Cellar example complete.",
   basePlayer: {
     level: 1,
     xp: 0,

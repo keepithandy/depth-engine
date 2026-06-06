@@ -25,6 +25,7 @@ Engine files should not contain theme-specific lore, names, or story text.
 Good engine code handles:
 
 - state
+- stage progression
 - combat
 - inventory
 - loot
@@ -38,7 +39,9 @@ Put example-specific data in `examples/` instead of engine files.
 - `game.config.js` for theme settings
 - `items.js` for equipment and sellable items
 - `enemies.js` for encounters and rewards
-- `zones.js` for floor mapping
+- `zones.js` for stage-to-zone mapping
+
+Engine code should use `currentStage` and `maxStage`. Example content can label stages as floors, waves, rooms, jobs, days, areas, or another structure, but that wording should stay in example data or clearly labeled example UI.
 
 ## Avoid Project-Specific Lore In Engine Files
 

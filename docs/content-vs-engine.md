@@ -25,7 +25,9 @@ Example files are where you change the game theme.
 - loot tables
 - item names
 - zone names
-- floor mapping
+- stage mapping
+
+Rat Cellar is one example of stage-based RPG progression. Another example could treat the same stage number as a wave, room, job, day, area, or other progression unit.
 
 ## Good Generic Engine Terms
 
@@ -35,7 +37,9 @@ These belong in engine code:
 - enemy
 - item
 - zone
-- floor
+- stage
+- currentStage
+- maxStage
 - inventory
 - equipment
 - reward

@@ -1,5 +1,6 @@
-window.getEnemyForFloor = function getEnemyForFloor(floor) {
-  const zone = window.getZoneByFloor(Math.min(floor, window.GAME_CONFIG.maxFloor));
+window.getEnemyForStage = function getEnemyForStage(stage) {
+  const maxStage = window.GameState?.maxStage ?? window.getConfiguredMaxStage();
+  const zone = window.getZoneByStage(stage, maxStage);
   return window.getEnemyById(zone?.enemy) || window.ENEMIES[0];
 };
 
@@ -32,7 +33,7 @@ window.applyLevelUps = function applyLevelUps() {
 };
 
 window.resolveFight = function resolveFight() {
-  const enemy = window.getEnemyForFloor(window.GameState.floor);
+  const enemy = window.getEnemyForStage(window.GameState.currentStage);
   const player = window.GameState.player;
   const stats = window.getTotalPlayerStats();
   const playerDamage = Math.max(1, stats.attack - enemy.defense + Math.floor(Math.random() * 3));
@@ -44,16 +45,16 @@ window.resolveFight = function resolveFight() {
     player.xp += enemy.xp;
     player.currency += enemy.currency;
     window.rollLoot(enemy).forEach((item) => window.addItemToInventory(item));
-    const clearedFinalFloor = window.GameState.floor >= window.GAME_CONFIG.maxFloor;
-    if (clearedFinalFloor) {
+    const clearedFinalStage = window.GameState.currentStage >= window.GameState.maxStage;
+    if (clearedFinalStage) {
       window.GameState.completed = true;
     } else {
-      window.GameState.floor = Math.min(window.GameState.floor + 1, window.GAME_CONFIG.maxFloor);
+      window.GameState.currentStage = Math.min(window.GameState.currentStage + 1, window.GameState.maxStage);
     }
     window.GameState.log.unshift(`You defeated ${enemy.name}.`);
-    window.GameState.log.unshift(`Gained ${enemy.xp} XP and ${enemy.currency} ${window.GAME_CONFIG.currencyName}.`);
+    window.GameState.log.unshift(`Reward: ${enemy.xp} XP and ${enemy.currency} ${window.GAME_CONFIG.currencyName}.`);
     if (window.GameState.completed) {
-      window.GameState.log.unshift(`You cleared Floor ${window.GAME_CONFIG.maxFloor} and conquered the cellar.`);
+      window.GameState.log.unshift(window.GAME_CONFIG.completionLog || `You cleared Stage ${window.GameState.maxStage}.`);
     }
     window.applyLevelUps();
     window.saveGame();
@@ -63,7 +64,7 @@ window.resolveFight = function resolveFight() {
 
   player.hp = player.maxHp;
   window.GameState.log.unshift(`You were defeated by ${enemy.name}.`);
-  window.GameState.log.unshift("You recover and stay on the current floor.");
+  window.GameState.log.unshift("You recover and stay on the current stage.");
   window.saveGame();
   window.render();
 };

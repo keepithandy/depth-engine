@@ -3,7 +3,7 @@
 ## v0.1 Working Prototype
 
 - Rat Cellar prototype is playable.
-- Core fight, loot, inventory, and save loops work.
+- Core stage progression, fight, loot, inventory, and save loops work.
 
 ## v0.2 Engine Identity And Documentation
 
@@ -15,6 +15,7 @@
 
 - Separate example content more cleanly from shared engine code.
 - Improve the data shape and document content editing rules.
+- Use generic stage progression in the engine while examples choose their own labels.
 - Keep the working demo intact.
 
 ## v0.4 Multi-Example Loader

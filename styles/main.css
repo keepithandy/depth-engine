@@ -67,7 +67,7 @@ h1 { margin-bottom: 0.35rem; font-size: clamp(2rem, 4vw, 3.5rem); }
 .progress-label { display: flex; justify-content: space-between; color: var(--muted); margin-bottom: 0.35rem; font-size: 0.95rem; }
 .bar { height: 0.9rem; border-radius: 999px; background: #39291b; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); }
 .bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width 0.2s ease; }
-.bar-fill.floor { background: linear-gradient(90deg, #84cc16, #f59e0b); }
+.bar-fill.stage { background: linear-gradient(90deg, #84cc16, #f59e0b); }
 .preview-card, .log { padding: 0.9rem; border-radius: 0.9rem; background: var(--panel-2); border: 1px solid rgba(255,255,255,0.05); }
 .preview-card { min-height: 8.25rem; }
 .combat-actions { margin: 0.85rem 0; display: flex; gap: 0.75rem; flex-wrap: wrap; }
