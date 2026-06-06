@@ -41,7 +41,8 @@ It is designed as a starter foundation for small browser RPGs: simple to run, ea
 - `index.html` is the entry point and visible shell.
 - `styles/` contains the shared presentation layer.
 - `js/engine/` contains generic engine logic.
-- `examples/rat-cellar/` contains the loaded example game data.
+- `examples/` contains example games.
+- `examples/rat-cellar/` contains the currently loaded example game data.
 - `js/content/` is deprecated and only documents the old content location.
 - `docs/` contains engine rules and contributor guidance.
 - `README.md` explains the repo at a high level.
@@ -56,11 +57,13 @@ The engine stays generic. Example content defines the playable theme the engine 
 - `examples/rat-cellar/items.js` defines equipment and sellable items.
 - `examples/rat-cellar/enemies.js` defines encounters, rewards, and loot tables.
 - `examples/rat-cellar/zones.js` maps stages to zone names and enemy ids.
-- `js/engine/content-loader.js` exposes generic helpers for the currently loaded example.
+- `js/engine/content-loader.js` exposes active example metadata and generic helpers for the currently loaded example.
 
 These files are the main place to build a new RPG theme without rewriting the engine.
 
 IdleForge engine code uses `currentStage` and `maxStage` for progression. Example content can present stages as floors, waves, rooms, jobs, days, areas, or another label that fits the game.
+
+For the current manual example workflow, see [`docs/examples.md`](docs/examples.md). `index.html` still loads example scripts directly so the app can run without a server.
 
 ## Loaded Example
 
@@ -74,6 +77,7 @@ For more detail, see:
 
 - [`docs/engine-principles.md`](docs/engine-principles.md)
 - [`docs/content-vs-engine.md`](docs/content-vs-engine.md)
+- [`docs/examples.md`](docs/examples.md)
 
 ## How To Edit The Rat Cellar Example
 
@@ -92,19 +96,21 @@ Keep ids stable when you can, and update any references if you rename content id
 
 1. Create a new folder under `examples/`, such as `examples/new-game-name/`.
 2. Add `game.config.js`, `items.js`, `enemies.js`, and `zones.js`.
-3. Update `index.html` to load the new example scripts.
-4. Keep engine code in `js/engine/` generic and reusable.
-5. Keep example-specific lore, names, and data inside the example folder.
+3. Update `IDLEFORGE_ACTIVE_EXAMPLE` metadata in `js/engine/content-loader.js`.
+4. Update `index.html` to load the new example scripts for now.
+5. Keep engine code in `js/engine/` generic and reusable.
+6. Keep example-specific lore, names, and data inside the example folder.
 
 ## Contribution Note
 
-This is an open-source starter project. Contributions should keep the engine generic, preserve the working demo, and keep content separated from core logic.
+This is an open-source starter project. Contributions should keep the engine generic, preserve the working example, and keep content separated from core logic.
 
 Before opening a change, run the test checklist in `CONTRIBUTING.md`.
 
 ## Current Limitations
 
-- Only one demo theme is loaded right now.
+- Only one example game is loaded right now.
+- Active example metadata is centralized, but script loading is still manual.
 - There is no build system.
 - There is no plugin system yet.
 - There is a small save repair path, not a formal migration framework yet.

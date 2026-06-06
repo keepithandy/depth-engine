@@ -67,18 +67,25 @@
       </article>
     </section>
   </main>
-  <footer class="app-footer"><span id="footerLoadedExample">Loaded Example: Example Content</span>. Edit <span id="footerExamplePath">examples/</span> or add a new folder under examples/ to build your own RPG.</footer>
+  <footer class="app-footer"><span id="footerLoadedExample">Loaded example: Example Content</span>. Copy <span id="footerExamplePath">examples/</span> to start your own RPG.</footer>
 
+  <!-- Active example metadata -->
   <script src="js/engine/content-loader.js"></script>
+
+  <!-- Loaded example content: direct scripts preserve browser-file compatibility. -->
   <script src="examples/rat-cellar/game.config.js"></script>
   <script src="examples/rat-cellar/items.js"></script>
   <script src="examples/rat-cellar/enemies.js"></script>
   <script src="examples/rat-cellar/zones.js"></script>
+
+  <!-- Engine systems -->
   <script src="js/engine/state.js"></script>
   <script src="js/engine/save.js"></script>
   <script src="js/engine/loot.js"></script>
   <script src="js/engine/inventory.js"></script>
   <script src="js/engine/combat.js"></script>
+
+  <!-- UI/bootstrap -->
   <script src="js/engine/render.js"></script>
 </body>
 </html>

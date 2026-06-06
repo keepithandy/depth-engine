@@ -1,11 +1,5 @@
 // Example game config for the currently loaded sample content.
 // Keep the engine title generic and let the example only define data values.
-window.ACTIVE_EXAMPLE = {
-  id: "rat-cellar",
-  name: "Rat Cellar",
-  path: "examples/rat-cellar"
-};
-
 window.GAME_CONFIG = {
   title: "IdleForge RPG Engine",
   currencyName: "Coins",

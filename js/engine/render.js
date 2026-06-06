@@ -9,7 +9,7 @@ window.render = function render() {
   document.title = window.GAME_CONFIG.title;
   document.getElementById("loadedExampleText").textContent = `Loaded Example: ${activeExample.name}`;
   document.getElementById("goalStageHeadline").textContent = state.maxStage;
-  document.getElementById("footerLoadedExample").textContent = `Loaded Example: ${activeExample.name}`;
+  document.getElementById("footerLoadedExample").textContent = `Loaded example: ${activeExample.name}`;
   document.getElementById("footerExamplePath").textContent = activeExample.path;
   document.getElementById("playerStats").innerHTML = [
     ["Level", state.player.level],

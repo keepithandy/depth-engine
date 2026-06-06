@@ -2,9 +2,9 @@
 
 ## Project Purpose
 
-IdleForge is a generic browser incremental RPG engine. This pass proves that the project can host more than one theme by separating reusable engine logic from demo content.
+IdleForge is a generic browser incremental RPG engine. This pass proves that the project can host more than one theme by separating reusable engine logic from example content.
 
-## Engine vs Demo Content
+## Engine vs Example Content
 
 Engine code lives in `js/engine/`. It should focus on reusable systems such as state, combat, inventory, loot, save handling, and UI rendering.
 
@@ -13,14 +13,14 @@ Example content lives in `examples/`. It should define the sample theme, item na
 ## Naming Rules
 
 - Engine files use generic terms: `player`, `enemy`, `item`, `zone`, `currency`, `reward`.
-- Content files may define the demo theme and use themed names.
+- Content files may define the example theme and use themed names.
 - Keep ids stable and machine-friendly.
 - Keep display names readable for players.
 
 ## Current Scope
 
 - One shared engine.
-- Two sample zones.
+- One currently loaded example.
 - Stage-based combat progression.
 - Simple equipment and inventory.
 - Autosave, export, import, and reset support.

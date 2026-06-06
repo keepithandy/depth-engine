@@ -2,7 +2,7 @@
 
 IdleForge works best when engine logic and example content stay separate.
 
-## Engine Files Should Not Contain Demo Lore
+## Engine Files Should Not Contain Example Lore
 
 Engine files should stay reusable and generic.
 
@@ -28,6 +28,8 @@ Example files are where you change the game theme.
 - stage mapping
 
 Rat Cellar is one example of stage-based RPG progression. Another example could treat the same stage number as a wave, room, job, day, area, or other progression unit.
+
+Example games live under `examples/`. The active example metadata lives in `js/engine/content-loader.js`, while `index.html` currently loads that example's scripts directly for no-server compatibility.
 
 ## Good Generic Engine Terms
 
@@ -59,6 +61,7 @@ These belong in content files, not engine logic:
 
 - Keep engine files generic.
 - Put example-specific values in `examples/`.
+- Use `docs/examples.md` for the current manual example workflow.
 - Update docs when a data shape changes.
-- Test the demo after every change.
+- Test the loaded example after every change.
 - Do not hide content rules inside engine logic.
