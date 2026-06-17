@@ -54,6 +54,8 @@ Engine code should stay reusable across different RPG themes.
 
 ## Test Checklist Before Commit
 
+- Run `node smoke_idleforge_core.mjs`.
+- Run `node smoke_rat_cellar_content.mjs`.
 - Open `index.html` directly in a browser.
 - Confirm the loaded example label matches `js/engine/content-loader.js`.
 - Run at least one fight.
