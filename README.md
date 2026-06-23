@@ -1,22 +1,23 @@
-# IdleForge RPG Engine
+# Depth Engine
 
-IdleForge RPG Engine is a lightweight open-source browser RPG and incremental RPG engine built with plain HTML, CSS, and JavaScript.
+Depth Engine is a lightweight open-source browser RPG engine built with plain HTML, CSS, and JavaScript.
 
-It is designed as a starter foundation for small browser RPGs: simple to run, easy to read, and structured so reusable engine logic stays separate from example game content.
+It is designed as a bare HTML starter foundation for small RPGs: simple to run, easy to read, and structured so reusable engine logic stays separate from example game content. The goal is to give people a clean core they can copy, study, and reshape into their own RPG.
 
-## What IdleForge Is
+## What Depth Engine Is
 
 - A browser-first RPG engine foundation.
 - A plain HTML/CSS/JS project with no build step.
 - A content-driven starter that can power different RPG themes.
 - A working example game that proves the engine loop, save flow, and UI structure.
+- A reusable core inspired by the system-first lessons from DungeonDex.
 
 ## Current Prototype Status
 
 - The current loaded example is Rat Cellar.
 - The stage-based combat loop, XP gain, currency, loot, equipment, selling, save, export/import, and reset flows are working.
 - This repo is still a prototype foundation, not a full content pack.
-- The current focus is engine identity, documentation, and repo structure.
+- The current focus is engine identity, documentation, repo structure, and clean starter usability.
 
 ## How To Run Locally
 
@@ -29,7 +30,7 @@ It is designed as a starter foundation for small browser RPGs: simple to run, ea
 
 - Turn-based fight resolution.
 - XP and level progression.
-- Currency rewards and spending through selling.
+- Currency rewards and selling.
 - Loot drops and item inventory.
 - Equipment slots and stat aggregation.
 - Save/load using browser storage.
@@ -61,7 +62,7 @@ The engine stays generic. Example content defines the playable theme the engine 
 
 These files are the main place to build a new RPG theme without rewriting the engine.
 
-IdleForge engine code uses `currentStage` and `maxStage` for progression. Example content can present stages as floors, waves, rooms, jobs, days, areas, or another label that fits the game.
+Depth Engine uses `currentStage` and `maxStage` for progression. Example content can present stages as floors, waves, rooms, jobs, days, areas, or another label that fits the game.
 
 For the current manual example workflow, see [`docs/examples.md`](docs/examples.md). `index.html` still loads example scripts directly so the app can run without a server.
 
@@ -96,7 +97,7 @@ Keep ids stable when you can, and update any references if you rename content id
 
 1. Create a new folder under `examples/`, such as `examples/new-game-name/`.
 2. Add `game.config.js`, `items.js`, `enemies.js`, and `zones.js`.
-3. Update `IDLEFORGE_ACTIVE_EXAMPLE` metadata in `js/engine/content-loader.js`.
+3. Update `DEPTH_ENGINE_ACTIVE_EXAMPLE` metadata in `js/engine/content-loader.js`.
 4. Update `index.html` to load the new example scripts for now.
 5. Keep engine code in `js/engine/` generic and reusable.
 6. Keep example-specific lore, names, and data inside the example folder.
