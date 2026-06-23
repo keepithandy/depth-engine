@@ -3,23 +3,23 @@
 //
 // For now, index.html still loads the active example scripts directly. That
 // avoids fetch() and keeps the prototype working when opened from file://.
-window.IDLEFORGE_ACTIVE_EXAMPLE = {
+window.DEPTH_ENGINE_ACTIVE_EXAMPLE = {
   id: "rat-cellar",
   name: "Rat Cellar",
   path: "examples/rat-cellar",
-  description: "Minimal stage-based RPG example used to demonstrate IdleForge content files."
+  description: "Minimal stage-based RPG example used to demonstrate Depth Engine content files."
 };
 
 window.getActiveExample = function getActiveExample() {
-  return { ...window.IDLEFORGE_ACTIVE_EXAMPLE };
+  return { ...window.DEPTH_ENGINE_ACTIVE_EXAMPLE };
 };
 
 window.getActiveExamplePath = function getActiveExamplePath() {
-  return window.IDLEFORGE_ACTIVE_EXAMPLE.path;
+  return window.DEPTH_ENGINE_ACTIVE_EXAMPLE.path;
 };
 
 window.getActiveExampleName = function getActiveExampleName() {
-  return window.IDLEFORGE_ACTIVE_EXAMPLE.name;
+  return window.DEPTH_ENGINE_ACTIVE_EXAMPLE.name;
 };
 
 window.getStageLabel = function getStageLabel() {
