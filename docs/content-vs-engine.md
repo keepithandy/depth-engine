@@ -1,6 +1,6 @@
 # Content vs Engine
 
-IdleForge works best when engine logic and example content stay separate.
+Depth Engine works best when engine logic and example content stay separate.
 
 ## Engine Files Should Not Contain Example Lore
 
