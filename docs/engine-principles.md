@@ -1,6 +1,8 @@
 # Engine Principles
 
-IdleForge RPG Engine is meant to stay small, browser-first, and easy to understand.
+Depth Engine is meant to stay small, browser-first, and easy to understand.
+
+It is a bare HTML RPG engine core: plain files, readable systems, no build step, and no framework lock-in.
 
 ## Data-Driven Content
 
