@@ -5,11 +5,12 @@
 - Rat Cellar example prototype is playable.
 - Core stage progression, fight, loot, inventory, and save loops work.
 
-## v0.2 Engine Identity And Documentation
+## v0.2 Depth Engine Identity And Documentation
 
-- Reframe the repo as an open-source browser RPG engine.
+- Reframe the repo as Depth Engine, an open-source bare HTML RPG engine.
 - Add README, contributing, roadmap, and principles docs.
 - Make the visible UI describe the engine and loaded example clearly.
+- Remove misleading idle/incremental language from the public-facing identity.
 
 ## v0.3 Example And Content Separation
 
