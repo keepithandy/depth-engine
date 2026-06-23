@@ -1,14 +1,15 @@
-# Contributing to IdleForge RPG Engine
+# Contributing to Depth Engine
 
-Thanks for helping improve IdleForge RPG Engine.
+Thanks for helping improve Depth Engine.
 
 ## Project Goals
 
-- Keep the repo a lightweight browser RPG engine starter.
+- Keep the repo a lightweight bare HTML browser RPG engine starter.
 - Keep the loaded example working at all times.
 - Keep engine code generic.
 - Keep example content separate from engine logic.
 - Keep the project understandable for beginners.
+- Give people a clean core they can use to make their own RPG.
 - Keep direct `index.html` startup working unless a future pass explicitly changes that requirement.
 
 ## Coding Style
@@ -54,7 +55,7 @@ Engine code should stay reusable across different RPG themes.
 
 ## Test Checklist Before Commit
 
-- Run `node smoke_idleforge_core.mjs`.
+- Run `node smoke_depth_engine_core.mjs`.
 - Run `node smoke_rat_cellar_content.mjs`.
 - Open `index.html` directly in a browser.
 - Confirm the loaded example label matches `js/engine/content-loader.js`.
