@@ -1,6 +1,6 @@
 # Example Games
 
-Example games are small playable content sets that demonstrate how IdleForge RPG Engine can run a specific RPG theme. The engine is the reusable code in `js/engine/`; an example is the data and labels the engine consumes.
+Example games are small playable content sets that demonstrate how Depth Engine can run a specific RPG theme. The engine is the reusable code in `js/engine/`; an example is the data and labels the engine consumes.
 
 ## Rat Cellar
 
@@ -18,7 +18,7 @@ Do not put engine architecture, shared systems, browser boot logic, or reusable 
 
 ## Current Loading Approach
 
-`js/engine/content-loader.js` defines the active example metadata in `window.IDLEFORGE_ACTIVE_EXAMPLE`.
+`js/engine/content-loader.js` defines the active example metadata in `window.DEPTH_ENGINE_ACTIVE_EXAMPLE`.
 
 `index.html` still loads the Rat Cellar scripts directly:
 
@@ -35,7 +35,7 @@ Until a fuller loader exists, create a new example by hand:
 
 1. Copy `examples/rat-cellar` to `examples/my-example`.
 2. Rename or edit `game.config.js`, `items.js`, `enemies.js`, and `zones.js`.
-3. Update `IDLEFORGE_ACTIVE_EXAMPLE` metadata in `js/engine/content-loader.js`.
+3. Update `DEPTH_ENGINE_ACTIVE_EXAMPLE` metadata in `js/engine/content-loader.js`.
 4. Update the example script paths in `index.html`.
 5. Test by opening `index.html` directly.
 
