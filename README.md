@@ -19,6 +19,7 @@ It is designed as a bare HTML starter foundation for small RPGs: simple to run, 
 - The stage-based combat loop, XP gain, currency, loot, equipment, selling, save, export/import, and reset flows are working.
 - This repo is still a prototype foundation, not a full content pack.
 - The current focus is light Phase 2 preparation: a registry-backed multi-example plan without replacing direct startup.
+- Phase 4 public starter release strategy is documented, but publishing and package management are not part of the current prototype.
 - Rat Cellar still opens directly from `index.html`; there is no selector or dynamic loader yet.
 
 ## How To Run Locally
@@ -86,6 +87,7 @@ For more detail, see:
 - [`docs/content-vs-engine.md`](docs/content-vs-engine.md)
 - [`docs/examples.md`](docs/examples.md)
 - [`docs/multi-example-loading.md`](docs/multi-example-loading.md)
+- [`docs/public-starter-release.md`](docs/public-starter-release.md)
 
 ## How To Edit The Rat Cellar Example
 
@@ -125,6 +127,7 @@ Before opening a change, run the test checklist in `CONTRIBUTING.md`.
 - There is no build system.
 - There is no plugin system yet.
 - There is a small save repair path, not a formal migration framework yet.
+- Public starter packaging is documented as a future direction, not implemented yet.
 - The project is intentionally small and focused on the starter engine loop.
 
 ## Next Roadmap Steps
@@ -134,4 +137,5 @@ See [`ROADMAP.md`](ROADMAP.md) for the planned phases:
 - v0.4 loader implementation follow-up
 - v0.5 save migration docs
 - v0.6 hooks/plugin foundation
+- v1.0 stable starter release strategy
 - v1.0 stable starter release
