@@ -29,10 +29,19 @@
 - Rename the default exported save file away from old IdleForge branding.
 - Update docs for the current engine-vs-example boundary.
 
-## v0.4 Multi-Example Loader
+## v0.4 Multi-Example Loader Plan
+
+- Add `examples/examples.manifest.js` as the browser-friendly example registry.
+- Keep Rat Cellar registered as Example Game #1.
+- Add generic registry helpers in `js/engine/content-loader.js`.
+- Preserve direct `index.html` startup and manual script loading.
+- Document the intended future loader direction before adding selector/runtime switching.
+- Guard the registry/active-example relationship in smoke tests.
+
+## v0.4 Loader Implementation Follow-Up
 
 - Add a simple way to switch between multiple example content sets.
-- Build on the content-owned active example metadata.
+- Build on the content-owned active example metadata and registry.
 - Keep the loader browser-friendly and build-tool free.
 - Preserve direct `index.html` startup or document any future runtime change clearly.
 - Preserve a small, readable startup path.
