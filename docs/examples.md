@@ -10,7 +10,7 @@ Rat Cellar is not the engine identity. It is only the currently loaded example g
 
 ## Examples vs Engine Code
 
-Examples belong under `examples/`. They can define their own theme, names, labels, item balance, enemy rewards, zone titles, and progression labels.
+Examples belong under `examples/`. They can define their own theme, names, labels, item balance, enemy rewards, zone titles, progression labels, and active example metadata.
 
 Engine code belongs under `js/engine/`. It should stay generic and handle reusable behavior such as state, combat, loot, inventory, saving, rendering, and content helpers.
 
@@ -18,10 +18,13 @@ Do not put engine architecture, shared systems, browser boot logic, or reusable 
 
 ## Current Loading Approach
 
-`js/engine/content-loader.js` defines the active example metadata in `window.DEPTH_ENGINE_ACTIVE_EXAMPLE`.
+`examples/rat-cellar/example.meta.js` defines the active example metadata in `window.DEPTH_ENGINE_EXAMPLE_META`.
+
+`js/engine/content-loader.js` reads that metadata and exposes generic helper functions such as `getActiveExampleName()` and `getActiveExamplePath()`.
 
 `index.html` still loads the Rat Cellar scripts directly:
 
+- `examples/rat-cellar/example.meta.js`
 - `examples/rat-cellar/game.config.js`
 - `examples/rat-cellar/items.js`
 - `examples/rat-cellar/enemies.js`
@@ -34,16 +37,16 @@ This direct-script approach is intentional for now. It avoids `fetch()` and keep
 Until a fuller loader exists, create a new example by hand:
 
 1. Copy `examples/rat-cellar` to `examples/my-example`.
-2. Rename or edit `game.config.js`, `items.js`, `enemies.js`, and `zones.js`.
-3. Update `DEPTH_ENGINE_ACTIVE_EXAMPLE` metadata in `js/engine/content-loader.js`.
-4. Update the example script paths in `index.html`.
-5. Test by opening `index.html` directly.
+2. Rename or edit `example.meta.js`, `game.config.js`, `items.js`, `enemies.js`, and `zones.js`.
+3. Update the example script paths in `index.html`.
+4. Test by opening `index.html` directly.
 
 Keep the engine files generic while you edit the example data.
 
 ## Before Committing A New Example
 
 - Opens from `index.html`.
+- Has `example.meta.js`.
 - Has `game.config.js`.
 - Has `items.js`.
 - Has `enemies.js`.
@@ -51,6 +54,7 @@ Keep the engine files generic while you edit the example data.
 - Has no engine code inside the example folder.
 - Does not require a server.
 - Uses generic engine fields correctly.
+- Passes the content-boundary smoke checks.
 
 ## Future Loader Support
 

@@ -1,5 +1,12 @@
 # Roadmap
 
+## Four-Phase Plan
+
+1. Foundation: protect the working starter, direct browser startup, save reliability, generic engine boundaries, and the playable Rat Cellar example.
+2. Extensibility: add safer multi-example loading and lightweight extension points without forcing a framework or build step.
+3. Developer Experience: improve docs, smoke tests, workflows, examples, and contributor guidance.
+4. Ecosystem: grow reusable examples, templates, starter packs, and community-facing packages after the core is stable.
+
 ## v0.1 Working Prototype
 
 - Rat Cellar example prototype is playable.
@@ -12,18 +19,20 @@
 - Make the visible UI describe the engine and loaded example clearly.
 - Remove misleading idle/incremental language from the public-facing identity.
 
-## v0.3 Example And Content Separation
+## v0.3 Content Separation Hardening
 
-- Separate example content more cleanly from shared engine code.
-- Improve the data shape and document content editing rules.
-- Use generic stage progression in the engine while examples choose their own labels.
-- Document `examples/` as the home for example games.
-- Keep the working example intact.
+- Move active example identity into `examples/rat-cellar/example.meta.js`.
+- Keep `js/engine/content-loader.js` generic and metadata-driven.
+- Preserve direct `index.html` startup and manual script loading.
+- Keep Rat Cellar playable.
+- Guard against Rat Cellar-specific terms leaking into `js/engine/`.
+- Rename the default exported save file away from old IdleForge branding.
+- Update docs for the current engine-vs-example boundary.
 
 ## v0.4 Multi-Example Loader
 
 - Add a simple way to switch between multiple example content sets.
-- Build on the active example metadata in `js/engine/content-loader.js`.
+- Build on the content-owned active example metadata.
 - Keep the loader browser-friendly and build-tool free.
 - Preserve direct `index.html` startup or document any future runtime change clearly.
 - Preserve a small, readable startup path.
