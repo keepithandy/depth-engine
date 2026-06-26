@@ -4,8 +4,22 @@ import vm from "node:vm";
 
 const originalRandom = Math.random;
 
+const engineFiles = [
+  "./js/engine/content-loader.js",
+  "./js/engine/state.js",
+  "./js/engine/save.js",
+  "./js/engine/loot.js",
+  "./js/engine/inventory.js",
+  "./js/engine/combat.js",
+  "./js/engine/render.js"
+];
+
+function readLocal(path) {
+  return readFileSync(new URL(path, import.meta.url), "utf8");
+}
+
 function loadScript(path) {
-  const source = readFileSync(new URL(path, import.meta.url), "utf8");
+  const source = readLocal(path);
   vm.runInThisContext(source, { filename: path });
 }
 
@@ -30,6 +44,14 @@ function installBrowserStubs() {
 }
 
 function installMockContent() {
+  window.DEPTH_ENGINE_EXAMPLE_META = {
+    id: "smoke-example",
+    name: "Smoke Example",
+    path: "examples/smoke-example",
+    description: "Synthetic content used by the core smoke test.",
+    contentFiles: ["game.config.js", "items.js", "enemies.js", "zones.js"]
+  };
+
   window.GAME_CONFIG = {
     title: "Depth Engine Smoke Test",
     currencyName: "Test Coins",
@@ -72,6 +94,24 @@ function installMockContent() {
   ];
 }
 
+function assertEngineContentBoundary() {
+  const forbiddenEngineTerms = [
+    "Rat Cellar",
+    "rat-cellar",
+    "Moldy Entryway",
+    "Rat King",
+    "Sewer Ring",
+    "idleforge-save.json"
+  ];
+
+  engineFiles.forEach((path) => {
+    const source = readLocal(path);
+    forbiddenEngineTerms.forEach((term) => {
+      assert.ok(!source.includes(term), `${path} must not contain example-specific or old-brand term: ${term}`);
+    });
+  });
+}
+
 function loadEngine() {
   loadScript("./js/engine/content-loader.js");
   loadScript("./js/engine/state.js");
@@ -82,9 +122,15 @@ function loadEngine() {
 }
 
 try {
+  assertEngineContentBoundary();
   installBrowserStubs();
   installMockContent();
   loadEngine();
+
+  assert.equal(window.getActiveExampleName(), "Smoke Example", "content-loader reads metadata supplied by content");
+  assert.equal(window.getActiveExamplePath(), "examples/smoke-example", "content-loader exposes active example path");
+  assert.deepEqual(window.getActiveExample().contentFiles, ["game.config.js", "items.js", "enemies.js", "zones.js"], "content-loader copies content file metadata");
+  assert.equal(window.getSaveExportFileName(), "depth-engine-save.json", "export filename no longer uses old IdleForge branding");
 
   const fresh = window.createNewState();
   assert.equal(fresh.currentStage, 1, "createNewState starts at stage 1");
