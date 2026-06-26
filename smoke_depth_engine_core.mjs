@@ -44,6 +44,19 @@ function installBrowserStubs() {
 }
 
 function installMockContent() {
+  window.DEPTH_ENGINE_EXAMPLE_REGISTRY = [
+    {
+      id: "smoke-example",
+      name: "Smoke Example",
+      path: "examples/smoke-example",
+      description: "Synthetic content used by the core smoke test.",
+      entry: "examples/smoke-example/example.meta.js",
+      contentFiles: ["game.config.js", "items.js", "enemies.js", "zones.js"],
+      playable: true,
+      bundled: true
+    }
+  ];
+
   window.DEPTH_ENGINE_EXAMPLE_META = {
     id: "smoke-example",
     name: "Smoke Example",
@@ -130,6 +143,9 @@ try {
   assert.equal(window.getActiveExampleName(), "Smoke Example", "content-loader reads metadata supplied by content");
   assert.equal(window.getActiveExamplePath(), "examples/smoke-example", "content-loader exposes active example path");
   assert.deepEqual(window.getActiveExample().contentFiles, ["game.config.js", "items.js", "enemies.js", "zones.js"], "content-loader copies content file metadata");
+  assert.deepEqual(window.getExampleRegistry().map((entry) => entry.id), ["smoke-example"], "content-loader exposes a normalized example registry");
+  assert.equal(window.getRegisteredExampleById("smoke-example")?.playable, true, "registered examples preserve playable metadata");
+  assert.equal(window.isActiveExampleRegistered(), true, "active example should exist in the registry");
   assert.equal(window.getSaveExportFileName(), "depth-engine-save.json", "export filename no longer uses old IdleForge branding");
 
   const fresh = window.createNewState();
