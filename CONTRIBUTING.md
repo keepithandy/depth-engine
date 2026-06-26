@@ -17,6 +17,7 @@ Thanks for helping improve Depth Engine.
 - Use plain HTML, CSS, and JavaScript only.
 - Prefer small, readable changes over large rewrites.
 - Keep names generic in engine files.
+- Keep example identity and theme data in `examples/`.
 - Keep formatting consistent with the surrounding code.
 - Add comments only when a section would otherwise be hard to follow.
 
@@ -33,11 +34,13 @@ Good engine code handles:
 - loot
 - saving
 - rendering
+- active example helper access
 
 ## Keep Example Content Separate
 
 Put example-specific data in `examples/` instead of engine files.
 
+- `example.meta.js` for example identity and loaded content file metadata
 - `game.config.js` for theme settings
 - `items.js` for equipment and sellable items
 - `enemies.js` for encounters and rewards
@@ -49,7 +52,7 @@ Engine code should use `currentStage` and `maxStage`. Example content can label 
 
 ## Avoid Project-Specific Lore In Engine Files
 
-Do not add example lore, region names, character names, or world-specific labels to engine code.
+Do not add example lore, region names, character names, enemy names, item names, zone names, active example folder ids, or world-specific labels to engine code.
 
 Engine code should stay reusable across different RPG themes.
 
@@ -58,7 +61,7 @@ Engine code should stay reusable across different RPG themes.
 - Run `node smoke_depth_engine_core.mjs`.
 - Run `node smoke_rat_cellar_content.mjs`.
 - Open `index.html` directly in a browser.
-- Confirm the loaded example label matches `js/engine/content-loader.js`.
+- Confirm the loaded example label matches `examples/rat-cellar/example.meta.js`.
 - Run at least one fight.
 - Verify XP increases after combat.
 - Verify currency changes after rewards and selling.
@@ -66,6 +69,7 @@ Engine code should stay reusable across different RPG themes.
 - Verify save, export, import, and reset still work.
 - Refresh the page and confirm the state reloads.
 - Check that visible labels still read like an engine starter, not a one-off game.
+- Check that `js/engine/` remains free of Rat Cellar-specific names.
 
 ## Suggested Branch And Commit Workflow
 
