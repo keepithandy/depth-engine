@@ -58,8 +58,33 @@
 - Keep the base engine small and generic.
 - Avoid hard-coding theme-specific logic into the core.
 
+## Phase 4 Public Starter Planning
+
+See [`docs/public-starter-release.md`](docs/public-starter-release.md) for the public starter release strategy.
+
+Before Depth Engine is presented as a stable public starter, the project should define:
+
+- what `v1.0 stable starter` means
+- whether releases stay clone-first or eventually include downloadable starter ZIPs
+- how engine, example, docs, save, and breaking changes are versioned
+- what the public quickstart must prove
+- what screenshots or demo materials are useful without turning the repo into a marketing-heavy project
+- which packaging ideas are explicitly not approved yet
+
+Current Phase 4 stance:
+
+- Keep the repo clone-first.
+- Preserve direct `index.html` startup.
+- Do not introduce npm package management for release packaging unless separately approved.
+- Do not publish packages before save/version rules are trustworthy.
+- Treat examples as repo-owned starter content until the loader and authoring guidance are mature enough to split them out.
+
 ## v1.0 Stable Open RPG Engine Starter
 
 - Present a stable starter engine for browser RPG projects.
 - Keep the included example simple, readable, and easy to replace.
 - Treat the repo as an engine foundation rather than a single game.
+- Include a public quickstart that proves the starter runs without dependencies.
+- Include a release readiness checklist before calling the starter stable.
+- Document versioning expectations for engine, example, docs, save, and breaking changes.
+- Avoid package publishing or long-term compatibility promises until release rules are ready.
