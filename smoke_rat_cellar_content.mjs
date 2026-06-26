@@ -20,6 +20,7 @@ function assertPositiveNumber(value, label) {
 
 globalThis.window = globalThis;
 
+loadScript("./examples/examples.manifest.js");
 loadScript("./examples/rat-cellar/example.meta.js");
 loadScript("./js/engine/content-loader.js");
 loadScript("./examples/rat-cellar/game.config.js");
@@ -30,6 +31,9 @@ loadScript("./examples/rat-cellar/zones.js");
 assert.equal(window.getActiveExampleName(), "Rat Cellar", "Rat Cellar metadata should stay in the example folder");
 assert.equal(window.getActiveExamplePath(), "examples/rat-cellar", "Rat Cellar metadata should expose its example path");
 assert.deepEqual(window.getActiveExample().contentFiles, ["game.config.js", "items.js", "enemies.js", "zones.js"], "Rat Cellar metadata should list the content files loaded by index.html");
+assert.deepEqual(window.getExampleRegistry().map((entry) => entry.id), ["rat-cellar"], "Rat Cellar should be listed in the example registry");
+assert.equal(window.getRegisteredExampleById("rat-cellar")?.playable, true, "Rat Cellar registry entry should remain playable");
+assert.equal(window.isActiveExampleRegistered(), true, "Loaded Rat Cellar example should be registered");
 assert.ok(window.GAME_CONFIG, "GAME_CONFIG must exist");
 assert.equal(window.GAME_CONFIG.maxStage, 20, "Rat Cellar maxStage should remain 20");
 assert.equal(window.GAME_CONFIG.stageLabel, "Stage", "Rat Cellar should use the generic Stage label");

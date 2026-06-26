@@ -6,7 +6,10 @@ const DEPTH_ENGINE_FALLBACK_EXAMPLE = {
   name: "Example Content",
   path: "examples/",
   description: "Loaded example content.",
-  contentFiles: []
+  entry: "",
+  contentFiles: [],
+  playable: false,
+  bundled: false
 };
 
 window.normalizeActiveExampleMetadata = function normalizeActiveExampleMetadata(meta = {}) {
@@ -23,11 +26,37 @@ window.normalizeActiveExampleMetadata = function normalizeActiveExampleMetadata(
     name: stringOr(source.name, DEPTH_ENGINE_FALLBACK_EXAMPLE.name),
     path: stringOr(source.path, DEPTH_ENGINE_FALLBACK_EXAMPLE.path),
     description: stringOr(source.description, DEPTH_ENGINE_FALLBACK_EXAMPLE.description),
-    contentFiles
+    entry: stringOr(source.entry, DEPTH_ENGINE_FALLBACK_EXAMPLE.entry),
+    contentFiles,
+    playable: Boolean(source.playable),
+    bundled: Boolean(source.bundled)
   };
 };
 
+window.normalizeExampleRegistry = function normalizeExampleRegistry(registry = []) {
+  const list = Array.isArray(registry) ? registry : [];
+  return list
+    .map((entry) => window.normalizeActiveExampleMetadata(entry))
+    .filter((entry) => entry.id !== DEPTH_ENGINE_FALLBACK_EXAMPLE.id);
+};
+
+window.DEPTH_ENGINE_EXAMPLE_REGISTRY = window.normalizeExampleRegistry(window.DEPTH_ENGINE_EXAMPLE_REGISTRY);
 window.DEPTH_ENGINE_ACTIVE_EXAMPLE = window.normalizeActiveExampleMetadata(window.DEPTH_ENGINE_EXAMPLE_META);
+
+window.getExampleRegistry = function getExampleRegistry() {
+  return window.DEPTH_ENGINE_EXAMPLE_REGISTRY.map((entry) => ({
+    ...entry,
+    contentFiles: [...entry.contentFiles]
+  }));
+};
+
+window.getRegisteredExampleById = function getRegisteredExampleById(id) {
+  return window.getExampleRegistry().find((entry) => entry.id === id) || null;
+};
+
+window.isActiveExampleRegistered = function isActiveExampleRegistered() {
+  return Boolean(window.getRegisteredExampleById(window.DEPTH_ENGINE_ACTIVE_EXAMPLE.id));
+};
 
 window.getActiveExample = function getActiveExample() {
   return {

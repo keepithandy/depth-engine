@@ -18,12 +18,15 @@ Do not put engine architecture, shared systems, browser boot logic, or reusable 
 
 ## Current Loading Approach
 
+`examples/examples.manifest.js` defines the known example registry in `window.DEPTH_ENGINE_EXAMPLE_REGISTRY`.
+
 `examples/rat-cellar/example.meta.js` defines the active example metadata in `window.DEPTH_ENGINE_EXAMPLE_META`.
 
-`js/engine/content-loader.js` reads that metadata and exposes generic helper functions such as `getActiveExampleName()` and `getActiveExamplePath()`.
+`js/engine/content-loader.js` reads that registry and metadata, then exposes generic helper functions such as `getExampleRegistry()`, `getRegisteredExampleById()`, `getActiveExampleName()`, and `getActiveExamplePath()`.
 
 `index.html` still loads the Rat Cellar scripts directly:
 
+- `examples/examples.manifest.js`
 - `examples/rat-cellar/example.meta.js`
 - `examples/rat-cellar/game.config.js`
 - `examples/rat-cellar/items.js`
@@ -32,14 +35,17 @@ Do not put engine architecture, shared systems, browser boot logic, or reusable 
 
 This direct-script approach is intentional for now. It avoids `fetch()` and keeps the app working when `index.html` is opened directly from a local file path.
 
+For the future loader plan, see `docs/multi-example-loading.md`.
+
 ## Create A New Example Manually
 
 Until a fuller loader exists, create a new example by hand:
 
 1. Copy `examples/rat-cellar` to `examples/my-example`.
 2. Rename or edit `example.meta.js`, `game.config.js`, `items.js`, `enemies.js`, and `zones.js`.
-3. Update the example script paths in `index.html`.
-4. Test by opening `index.html` directly.
+3. Add the new example to `examples/examples.manifest.js`.
+4. Update the example script paths in `index.html` if you want it to be the active direct-load example for now.
+5. Test by opening `index.html` directly.
 
 Keep the engine files generic while you edit the example data.
 
@@ -51,6 +57,7 @@ Keep the engine files generic while you edit the example data.
 - Has `items.js`.
 - Has `enemies.js`.
 - Has `zones.js`.
+- Is listed in `examples/examples.manifest.js`.
 - Has no engine code inside the example folder.
 - Does not require a server.
 - Uses generic engine fields correctly.
@@ -58,7 +65,7 @@ Keep the engine files generic while you edit the example data.
 
 ## Future Loader Support
 
-A later pass may add cleaner multi-example support. That could include a small selector, a manifest-like registry, or safer script loading for hosted pages.
+A later pass may add cleaner multi-example support. That could include a small selector, a manifest-backed loader, or safer script loading for hosted pages.
 
 Any future loader should preserve the no-build-step project shape and avoid breaking direct-file startup unless the project explicitly chooses a new runtime requirement.
 

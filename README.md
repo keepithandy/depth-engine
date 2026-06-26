@@ -14,12 +14,12 @@ It is designed as a bare HTML starter foundation for small RPGs: simple to run, 
 
 ## Current Prototype Status
 
-- Current checkpoint: v0.3 Content Separation Hardening.
+- Current checkpoint: v0.4 Multi-Example Loader Plan.
 - The current loaded example is Rat Cellar.
 - The stage-based combat loop, XP gain, currency, loot, equipment, selling, save, export/import, and reset flows are working.
 - This repo is still a prototype foundation, not a full content pack.
-- The current focus is Phase 1 foundation: direct startup, generic engine files, clear example boundaries, and smoke-guarded starter usability.
-- Phase 2 preparation is intentionally light: active example metadata now lives with the example content, but `index.html` still loads scripts manually.
+- The current focus is light Phase 2 preparation: a registry-backed multi-example plan without replacing direct startup.
+- Rat Cellar still opens directly from `index.html`; there is no selector or dynamic loader yet.
 
 ## How To Run Locally
 
@@ -44,7 +44,8 @@ It is designed as a bare HTML starter foundation for small RPGs: simple to run, 
 - `index.html` is the entry point and visible shell.
 - `styles/` contains the shared presentation layer.
 - `js/engine/` contains generic engine logic.
-- `examples/` contains example games.
+- `examples/` contains example games and the example registry.
+- `examples/examples.manifest.js` lists registered example entries for future loader work.
 - `examples/rat-cellar/` contains the currently loaded example game data and metadata.
 - `examples/rat-cellar/example.meta.js` defines Rat Cellar's active example identity.
 - `js/content/` is deprecated and only documents the old content location.
@@ -57,7 +58,8 @@ It is designed as a bare HTML starter foundation for small RPGs: simple to run, 
 The engine stays generic. Example content defines the playable theme the engine consumes.
 
 - `js/engine/` handles state, combat, loot, inventory, saves, and rendering.
-- `js/engine/content-loader.js` exposes generic helpers for whichever example metadata was loaded first.
+- `js/engine/content-loader.js` exposes generic helpers for the active example and registered examples.
+- `examples/examples.manifest.js` lists available examples without switching them yet.
 - `examples/rat-cellar/example.meta.js` sets Rat Cellar's id, name, path, description, and content file list.
 - `examples/rat-cellar/game.config.js` sets the title, currency label, stage cap, save key, and base player stats.
 - `examples/rat-cellar/items.js` defines equipment and sellable items.
@@ -68,7 +70,7 @@ These files are the main place to build a new RPG theme without rewriting the en
 
 Depth Engine uses `currentStage` and `maxStage` for progression. Example content can present stages as floors, waves, rooms, jobs, days, areas, or another label that fits the game.
 
-For the current manual example workflow, see [`docs/examples.md`](docs/examples.md). `index.html` still loads example scripts directly so the app can run without a server.
+For the current manual example workflow, see [`docs/examples.md`](docs/examples.md). For the future loader plan, see [`docs/multi-example-loading.md`](docs/multi-example-loading.md). `index.html` still loads example scripts directly so the app can run without a server.
 
 ## Loaded Example
 
@@ -83,6 +85,7 @@ For more detail, see:
 - [`docs/engine-principles.md`](docs/engine-principles.md)
 - [`docs/content-vs-engine.md`](docs/content-vs-engine.md)
 - [`docs/examples.md`](docs/examples.md)
+- [`docs/multi-example-loading.md`](docs/multi-example-loading.md)
 
 ## How To Edit The Rat Cellar Example
 
@@ -102,10 +105,11 @@ Keep ids stable when you can, and update any references if you rename content id
 
 1. Create a new folder under `examples/`, such as `examples/new-game-name/`.
 2. Add `example.meta.js`, `game.config.js`, `items.js`, `enemies.js`, and `zones.js`.
-3. Update the example script paths in `index.html` for now.
-4. Keep engine code in `js/engine/` generic and reusable.
-5. Keep example-specific lore, names, labels, and data inside the example folder.
-6. Run both smoke scripts after the change.
+3. Add the example to `examples/examples.manifest.js`.
+4. Update the example script paths in `index.html` for now if you want it to be the active direct-load example.
+5. Keep engine code in `js/engine/` generic and reusable.
+6. Keep example-specific lore, names, labels, and data inside the example folder.
+7. Run both smoke scripts after the change.
 
 ## Contribution Note
 
@@ -116,19 +120,18 @@ Before opening a change, run the test checklist in `CONTRIBUTING.md`.
 ## Current Limitations
 
 - Only one example game is loaded right now.
+- The example registry exists, but there is no formal multi-example switcher yet.
 - Active example metadata is content-owned, but script loading is still manual.
 - There is no build system.
 - There is no plugin system yet.
 - There is a small save repair path, not a formal migration framework yet.
-- There is no formal multi-example switcher yet.
 - The project is intentionally small and focused on the starter engine loop.
 
 ## Next Roadmap Steps
 
 See [`ROADMAP.md`](ROADMAP.md) for the planned phases:
 
-- v0.3 content separation
-- v0.4 multi-example loading
+- v0.4 loader implementation follow-up
 - v0.5 save migration docs
 - v0.6 hooks/plugin foundation
 - v1.0 stable starter release
