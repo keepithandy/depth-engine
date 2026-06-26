@@ -38,12 +38,16 @@ window.saveGame = function saveGame() {
   localStorage.setItem(window.GAME_CONFIG.saveKey, JSON.stringify(window.GameState));
 };
 
+window.getSaveExportFileName = function getSaveExportFileName() {
+  return window.GAME_CONFIG?.exportFileName || "depth-engine-save.json";
+};
+
 window.exportSave = function exportSave() {
   const blob = new Blob([JSON.stringify(window.GameState, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "idleforge-save.json";
+  a.download = window.getSaveExportFileName();
   a.click();
   setTimeout(() => URL.revokeObjectURL(url), 0);
 };
