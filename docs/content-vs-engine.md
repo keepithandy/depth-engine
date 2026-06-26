@@ -13,6 +13,7 @@ Do not put:
 - character names
 - story text
 - theme-specific progression rules
+- active example identity values
 
 in engine code.
 
@@ -20,6 +21,7 @@ in engine code.
 
 Example files are where you change the game theme.
 
+- example id, name, path, description, and content file list
 - title and currency labels
 - enemy lists
 - loot tables
@@ -29,7 +31,7 @@ Example files are where you change the game theme.
 
 Rat Cellar is one example of stage-based RPG progression. Another example could treat the same stage number as a wave, room, job, day, area, or other progression unit.
 
-Example games live under `examples/`. The active example metadata lives in `js/engine/content-loader.js`, while `index.html` currently loads that example's scripts directly for no-server compatibility.
+Example games live under `examples/`. The active example metadata now lives in the active example folder, such as `examples/rat-cellar/example.meta.js`. `index.html` currently loads that metadata and the example scripts directly for no-server compatibility.
 
 ## Good Generic Engine Terms
 
@@ -46,6 +48,7 @@ These belong in engine code:
 - equipment
 - reward
 - save data
+- active example metadata
 
 ## Content-Only Terms
 
@@ -56,6 +59,16 @@ These belong in content files, not engine logic:
 - special currency names
 - story-specific item names
 - themed zone titles
+- active example names such as Rat Cellar
+- active example folder ids such as `rat-cellar`
+
+## Current Boundary Contract
+
+- `examples/<example>/example.meta.js` owns the example id, display name, path, description, and content file list.
+- `js/engine/content-loader.js` normalizes and exposes metadata after the example metadata script has loaded.
+- `index.html` may still reference the active example scripts directly until the future multi-example loader exists.
+- Engine files must not hardcode Rat Cellar lore, item names, enemy names, zone names, or old IdleForge branding.
+- Smoke tests should fail if example-specific Rat Cellar terms drift into `js/engine/`.
 
 ## Rules For Future Contributors
 
