@@ -14,10 +14,12 @@ It is designed as a bare HTML starter foundation for small RPGs: simple to run, 
 
 ## Current Prototype Status
 
+- Current checkpoint: v0.3 Content Separation Hardening.
 - The current loaded example is Rat Cellar.
 - The stage-based combat loop, XP gain, currency, loot, equipment, selling, save, export/import, and reset flows are working.
 - This repo is still a prototype foundation, not a full content pack.
-- The current focus is engine identity, documentation, repo structure, and clean starter usability.
+- The current focus is Phase 1 foundation: direct startup, generic engine files, clear example boundaries, and smoke-guarded starter usability.
+- Phase 2 preparation is intentionally light: active example metadata now lives with the example content, but `index.html` still loads scripts manually.
 
 ## How To Run Locally
 
@@ -43,7 +45,8 @@ It is designed as a bare HTML starter foundation for small RPGs: simple to run, 
 - `styles/` contains the shared presentation layer.
 - `js/engine/` contains generic engine logic.
 - `examples/` contains example games.
-- `examples/rat-cellar/` contains the currently loaded example game data.
+- `examples/rat-cellar/` contains the currently loaded example game data and metadata.
+- `examples/rat-cellar/example.meta.js` defines Rat Cellar's active example identity.
 - `js/content/` is deprecated and only documents the old content location.
 - `docs/` contains engine rules and contributor guidance.
 - `README.md` explains the repo at a high level.
@@ -54,11 +57,12 @@ It is designed as a bare HTML starter foundation for small RPGs: simple to run, 
 The engine stays generic. Example content defines the playable theme the engine consumes.
 
 - `js/engine/` handles state, combat, loot, inventory, saves, and rendering.
+- `js/engine/content-loader.js` exposes generic helpers for whichever example metadata was loaded first.
+- `examples/rat-cellar/example.meta.js` sets Rat Cellar's id, name, path, description, and content file list.
 - `examples/rat-cellar/game.config.js` sets the title, currency label, stage cap, save key, and base player stats.
 - `examples/rat-cellar/items.js` defines equipment and sellable items.
 - `examples/rat-cellar/enemies.js` defines encounters, rewards, and loot tables.
 - `examples/rat-cellar/zones.js` maps stages to zone names and enemy ids.
-- `js/engine/content-loader.js` exposes active example metadata and generic helpers for the currently loaded example.
 
 These files are the main place to build a new RPG theme without rewriting the engine.
 
@@ -84,23 +88,24 @@ For more detail, see:
 
 If you want to make a new RPG theme, start here:
 
-1. Edit `examples/rat-cellar/game.config.js` to change the example title, currency name, stage label, and stage cap.
-2. Edit `examples/rat-cellar/items.js` to replace the item list.
-3. Edit `examples/rat-cellar/enemies.js` to replace the encounter list.
-4. Edit `examples/rat-cellar/zones.js` to rename the stage map.
-5. Refresh the browser and test a few fights.
-6. Use Reset Save if you want a clean run.
+1. Edit `examples/rat-cellar/example.meta.js` to change the example id, name, path, description, and content file list.
+2. Edit `examples/rat-cellar/game.config.js` to change the example title, currency name, stage label, and stage cap.
+3. Edit `examples/rat-cellar/items.js` to replace the item list.
+4. Edit `examples/rat-cellar/enemies.js` to replace the encounter list.
+5. Edit `examples/rat-cellar/zones.js` to rename the stage map.
+6. Refresh the browser and test a few fights.
+7. Use Reset Save if you want a clean run.
 
 Keep ids stable when you can, and update any references if you rename content ids.
 
 ## How To Add Future Examples
 
 1. Create a new folder under `examples/`, such as `examples/new-game-name/`.
-2. Add `game.config.js`, `items.js`, `enemies.js`, and `zones.js`.
-3. Update `DEPTH_ENGINE_ACTIVE_EXAMPLE` metadata in `js/engine/content-loader.js`.
-4. Update `index.html` to load the new example scripts for now.
-5. Keep engine code in `js/engine/` generic and reusable.
-6. Keep example-specific lore, names, and data inside the example folder.
+2. Add `example.meta.js`, `game.config.js`, `items.js`, `enemies.js`, and `zones.js`.
+3. Update the example script paths in `index.html` for now.
+4. Keep engine code in `js/engine/` generic and reusable.
+5. Keep example-specific lore, names, labels, and data inside the example folder.
+6. Run both smoke scripts after the change.
 
 ## Contribution Note
 
@@ -111,7 +116,7 @@ Before opening a change, run the test checklist in `CONTRIBUTING.md`.
 ## Current Limitations
 
 - Only one example game is loaded right now.
-- Active example metadata is centralized, but script loading is still manual.
+- Active example metadata is content-owned, but script loading is still manual.
 - There is no build system.
 - There is no plugin system yet.
 - There is a small save repair path, not a formal migration framework yet.
