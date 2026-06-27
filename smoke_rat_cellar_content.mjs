@@ -37,6 +37,7 @@ assert.equal(window.isActiveExampleRegistered(), true, "Loaded Rat Cellar exampl
 assert.ok(window.GAME_CONFIG, "GAME_CONFIG must exist");
 assert.equal(window.GAME_CONFIG.maxStage, 20, "Rat Cellar maxStage should remain 20");
 assert.equal(window.GAME_CONFIG.stageLabel, "Stage", "Rat Cellar should use the generic Stage label");
+assert.equal(window.GAME_CONFIG.exportFileName, "depth-engine-save.json", "Rat Cellar should use the Depth Engine export filename");
 assert.ok(Array.isArray(window.ITEMS), "ITEMS must be an array");
 assert.ok(Array.isArray(window.ENEMIES), "ENEMIES must be an array");
 assert.ok(Array.isArray(window.ZONES), "ZONES must be an array");
