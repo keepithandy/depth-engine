@@ -17,6 +17,8 @@ It is designed as a bare HTML starter foundation for small RPGs: simple to run, 
 - Current checkpoint: v0.4 Multi-Example Loader Plan.
 - The current loaded example is Rat Cellar.
 - The stage-based combat loop, XP gain, currency, loot, equipment, selling, save, export/import, and reset flows are working.
+- Exported save files use `depth-engine-save.json`; import compatibility and the browser storage key are unchanged.
+- Equipment changes remove one selected inventory entry at a time, so duplicate item ids remain safe.
 - This repo is still a prototype foundation, not a full content pack.
 - The current focus is light Phase 2 preparation: a registry-backed multi-example plan without replacing direct startup.
 - Phase 4 public starter release strategy is documented, but publishing and package management are not part of the current prototype.
@@ -62,7 +64,7 @@ The engine stays generic. Example content defines the playable theme the engine 
 - `js/engine/content-loader.js` exposes generic helpers for the active example and registered examples.
 - `examples/examples.manifest.js` lists available examples without switching them yet.
 - `examples/rat-cellar/example.meta.js` sets Rat Cellar's id, name, path, description, and content file list.
-- `examples/rat-cellar/game.config.js` sets the title, currency label, stage cap, save key, and base player stats.
+- `examples/rat-cellar/game.config.js` sets the title, currency label, stage cap, save key, export filename, and base player stats.
 - `examples/rat-cellar/items.js` defines equipment and sellable items.
 - `examples/rat-cellar/enemies.js` defines encounters, rewards, and loot tables.
 - `examples/rat-cellar/zones.js` maps stages to zone names and enemy ids.
@@ -94,7 +96,7 @@ For more detail, see:
 If you want to make a new RPG theme, start here:
 
 1. Edit `examples/rat-cellar/example.meta.js` to change the example id, name, path, description, and content file list.
-2. Edit `examples/rat-cellar/game.config.js` to change the example title, currency name, stage label, and stage cap.
+2. Edit `examples/rat-cellar/game.config.js` to change the example title, currency name, stage label, stage cap, and export filename.
 3. Edit `examples/rat-cellar/items.js` to replace the item list.
 4. Edit `examples/rat-cellar/enemies.js` to replace the encounter list.
 5. Edit `examples/rat-cellar/zones.js` to rename the stage map.
