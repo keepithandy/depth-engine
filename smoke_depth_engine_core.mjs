@@ -71,6 +71,7 @@ function installMockContent() {
     maxStage: 3,
     stageLabel: "Stage",
     saveKey: "depth-engine-smoke-save",
+    exportFileName: "depth-engine-save.json",
     startLog: "Smoke test started.",
     completionLog: "Smoke test complete.",
     basePlayer: {
@@ -90,6 +91,7 @@ function installMockContent() {
 
   window.ITEMS = [
     { id: "practice-sword", name: "Practice Sword", slot: "weapon", attack: 5, defense: 0, price: 10, description: "Smoke weapon." },
+    { id: "heavy-sword", name: "Heavy Sword", slot: "weapon", attack: 7, defense: 0, price: 14, description: "Replacement smoke weapon." },
     { id: "training-helm", name: "Training Helm", slot: "head", attack: 0, defense: 2, price: 8, description: "Smoke armor." },
     { id: "old-coin", name: "Old Coin", slot: "trinket", attack: 0, defense: 0, price: 6, description: "Smoke sellable." }
   ];
@@ -146,6 +148,7 @@ try {
   assert.deepEqual(window.getExampleRegistry().map((entry) => entry.id), ["smoke-example"], "content-loader exposes a normalized example registry");
   assert.equal(window.getRegisteredExampleById("smoke-example")?.playable, true, "registered examples preserve playable metadata");
   assert.equal(window.isActiveExampleRegistered(), true, "active example should exist in the registry");
+  assert.equal(window.GAME_CONFIG.exportFileName, "depth-engine-save.json", "mock content declares the Depth Engine export filename");
   assert.equal(window.getSaveExportFileName(), "depth-engine-save.json", "export filename no longer uses old IdleForge branding");
 
   const fresh = window.createNewState();
@@ -179,14 +182,17 @@ try {
   assert.deepEqual(window.rollLoot(window.ENEMIES[0]), [], "rollLoot returns no drops when the roll fails");
 
   window.GameState = window.createNewState();
-  window.GameState.inventory = ["practice-sword", "old-coin"];
+  window.GameState.inventory = ["practice-sword", "practice-sword", "heavy-sword", "old-coin"];
   window.equipItem("practice-sword");
   assert.equal(window.GameState.equipment.weapon, "practice-sword", "equipItem equips the selected item");
-  assert.deepEqual(window.GameState.inventory, ["old-coin"], "equipItem removes the equipped item from inventory");
+  assert.deepEqual(window.GameState.inventory, ["practice-sword", "heavy-sword", "old-coin"], "equipItem removes only one duplicate copy from inventory");
+  window.equipItem("heavy-sword");
+  assert.equal(window.GameState.equipment.weapon, "heavy-sword", "equipItem replaces equipped gear in the same slot");
+  assert.deepEqual(window.GameState.inventory, ["practice-sword", "old-coin", "practice-sword"], "equipItem returns the previously equipped item while preserving duplicate copies");
 
   window.sellItem("old-coin");
   assert.equal(window.GameState.player.currency, 3, "sellItem adds half item price, floored with minimum one");
-  assert.deepEqual(window.GameState.inventory, [], "sellItem removes the sold item from inventory");
+  assert.deepEqual(window.GameState.inventory, ["practice-sword", "practice-sword"], "sellItem removes only the sold item from inventory");
 
   window.GameState = window.createNewState();
   window.GameState.currentStage = window.GameState.maxStage;
