@@ -19,7 +19,7 @@ It is designed as a bare HTML starter foundation for small RPGs: simple to run, 
 - The stage-based combat loop, XP gain, currency, loot, equipment, selling, save, export/import, and reset flows are working.
 - Exported save files use `depth-engine-save.json`; import compatibility and the browser storage key are unchanged.
 - Equipment changes remove one selected inventory entry at a time, so duplicate item ids remain safe.
-- Issue #2 and issue #3 are covered by the current smoke checks.
+- Issue #2 and issue #3 are covered by the current smoke checks and ready to close.
 - Validated locally with `node smoke_depth_engine_core.mjs` and `node smoke_rat_cellar_content.mjs`.
 - This repo is still a prototype foundation, not a full content pack.
 - The current focus is light Phase 2 preparation: a registry-backed multi-example plan without replacing direct startup.
