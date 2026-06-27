@@ -7,6 +7,7 @@ window.GAME_CONFIG = {
   maxStage: 20,
   stageLabel: "Stage",
   saveKey: "depth-engine-demo-save-v1",
+  exportFileName: "depth-engine-save.json",
   startLog: "Rat Cellar example loaded. Begin at Stage 1.",
   completionLog: "Rat Cellar example complete.",
   basePlayer: {
