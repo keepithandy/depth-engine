@@ -22,12 +22,15 @@ window.addItemToInventory = function addItemToInventory(item) {
 window.equipItem = function equipItem(itemId) {
   const item = window.getItemById(itemId);
   if (!item) return;
+  const inventoryIndex = window.GameState.inventory.indexOf(item.id);
+  if (inventoryIndex >= 0) {
+    window.GameState.inventory.splice(inventoryIndex, 1);
+  }
   const currentlyEquipped = window.GameState.equipment[item.slot];
   if (currentlyEquipped) {
     window.GameState.inventory.push(currentlyEquipped);
   }
   window.GameState.equipment[item.slot] = item.id;
-  window.GameState.inventory = window.GameState.inventory.filter((id) => id !== item.id);
   window.GameState.log.unshift(`Equipped ${item.name}.`);
   window.saveGame();
   window.render();
