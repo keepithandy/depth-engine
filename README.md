@@ -16,6 +16,8 @@ It is designed as a bare HTML starter foundation for small RPGs: simple to run, 
 
 - Current checkpoint: v0.4 Multi-Example Loader Plan.
 - The current loaded example is Rat Cellar.
+- The bundled example registry now includes Rat Cellar and Arena Waves.
+- Arena Waves is bundled and smoke-validated, but it is not the active direct-load example yet.
 - The stage-based combat loop, XP gain, currency, loot, equipment, selling, save, export/import, and reset flows are working.
 - Exported save files use `depth-engine-save.json`; import compatibility and the browser storage key are unchanged.
 - Equipment changes remove one selected inventory entry at a time, so duplicate item ids remain safe.
@@ -45,6 +47,7 @@ It is designed as a bare HTML starter foundation for small RPGs: simple to run, 
 - Export/import for moving saves between browsers.
 - Reset for starting fresh.
 - Read-only registered example surface powered by `examples/examples.manifest.js`.
+- Two bundled content examples: Rat Cellar and Arena Waves.
 
 ## Smoke Checks
 
@@ -66,6 +69,7 @@ The registered-example smoke validates every bundled example listed in `examples
 - `examples/` contains example games and the example registry.
 - `examples/examples.manifest.js` lists registered example entries for future loader work.
 - `examples/rat-cellar/` contains the currently loaded example game data and metadata.
+- `examples/arena-waves/` contains a secondary bundled example that is registered and smoke-validated, but not direct-loaded by default.
 - `examples/rat-cellar/example.meta.js` defines Rat Cellar's active example identity.
 - `js/content/` is deprecated and only documents the old content location.
 - `docs/` contains engine rules and contributor guidance.
@@ -85,6 +89,7 @@ The engine stays generic. Example content defines the playable theme the engine 
 - `examples/rat-cellar/items.js` defines equipment and sellable items.
 - `examples/rat-cellar/enemies.js` defines encounters, rewards, and loot tables.
 - `examples/rat-cellar/zones.js` maps stages to zone names and enemy ids.
+- `examples/arena-waves/` proves the same engine fields can present stages as combat waves instead of cellar rooms.
 
 These files are the main place to build a new RPG theme without rewriting the engine.
 
@@ -98,7 +103,7 @@ For the current manual example workflow, see [`docs/examples.md`](docs/examples.
 - Example path: `examples/rat-cellar`
 - Example name: Rat Cellar
 
-Rat Cellar is included as Example Game #1 only. It is not the identity of the engine.
+Rat Cellar is included as Example Game #1 only. It is not the identity of the engine. Arena Waves is included as a secondary bundled example for registry and validation coverage.
 
 For more detail, see:
 
@@ -148,7 +153,8 @@ Before opening a change, run the test checklist in `CONTRIBUTING.md`.
 
 ## Current Limitations
 
-- Only one example game is loaded right now.
+- Rat Cellar is the only direct-loaded playable example in `index.html`.
+- Arena Waves is bundled and smoke-validated, but runtime switching is not implemented yet.
 - The example registry exists, but runtime switching is not implemented yet.
 - Active example metadata is content-owned, but script loading is still manual.
 - There is no build system.
