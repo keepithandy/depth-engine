@@ -23,7 +23,7 @@ It is designed as a bare HTML starter foundation for small RPGs: simple to run, 
 - Equipment changes remove one selected inventory entry at a time, so duplicate item ids remain safe.
 - GitHub Actions now runs all smoke scripts on pushes to `main` and on pull requests.
 - Save schema rules, trusted rendering assumptions, foundation hardening checks, loader mode, hooks, content authoring, release workflow, and example-pack rules are documented under `docs/`.
-- Validated by `node smoke_depth_engine_core.mjs`, `node smoke_rat_cellar_content.mjs`, and `node smoke_registered_examples_content.mjs`.
+- Validated by `node smoke_index_static_contract.mjs`, `node smoke_depth_engine_core.mjs`, `node smoke_rat_cellar_content.mjs`, and `node smoke_registered_examples_content.mjs`.
 - This repo is still a prototype foundation, not a full content pack.
 - The current focus is light Phase 2 preparation: a registry-backed multi-example plan without replacing direct startup.
 - Phase 4 public starter release strategy is documented, but publishing and package management are not part of the current prototype.
@@ -54,12 +54,13 @@ It is designed as a bare HTML starter foundation for small RPGs: simple to run, 
 Run these from the repo root:
 
 ```bash
+node smoke_index_static_contract.mjs
 node smoke_depth_engine_core.mjs
 node smoke_rat_cellar_content.mjs
 node smoke_registered_examples_content.mjs
 ```
 
-The registered-example smoke validates every bundled example listed in `examples/examples.manifest.js`.
+The index static smoke guards required DOM ids and direct Rat Cellar script order. The registered-example smoke validates every bundled example listed in `examples/examples.manifest.js`.
 
 ## Folder Structure
 
@@ -143,7 +144,7 @@ Keep ids stable when you can, and update any references if you rename content id
 4. Update the example script paths in `index.html` for now if you want it to be the active direct-load example.
 5. Keep engine code in `js/engine/` generic and reusable.
 6. Keep example-specific lore, names, labels, and data inside the example folder.
-7. Run all three smoke scripts after the change.
+7. Run all four smoke scripts after the change.
 
 ## Contribution Note
 
