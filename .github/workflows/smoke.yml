@@ -24,3 +24,6 @@ jobs:
 
       - name: Run Rat Cellar content smoke test
         run: node smoke_rat_cellar_content.mjs
+
+      - name: Run registered examples content smoke test
+        run: node smoke_registered_examples_content.mjs
