@@ -1,0 +1,26 @@
+name: Depth Engine Smoke
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  smoke:
+    name: Core and content smoke tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run core smoke test
+        run: node smoke_depth_engine_core.mjs
+
+      - name: Run Rat Cellar content smoke test
+        run: node smoke_rat_cellar_content.mjs
