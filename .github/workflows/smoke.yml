@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Run index startup contract smoke test
+        run: node smoke_index_static_contract.mjs
+
       - name: Run core smoke test
         run: node smoke_depth_engine_core.mjs
 
