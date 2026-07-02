@@ -20,6 +20,8 @@ It is designed as a bare HTML starter foundation for small RPGs: simple to run, 
 - Exported save files use `depth-engine-save.json`; import compatibility and the browser storage key are unchanged.
 - Equipment changes remove one selected inventory entry at a time, so duplicate item ids remain safe.
 - Issue #2 and issue #3 are covered by the current smoke checks and ready to close.
+- GitHub Actions now runs the two smoke scripts on pushes to `main` and on pull requests.
+- Save schema rules, trusted rendering assumptions, and foundation hardening checks are documented under `docs/`.
 - Validated locally with `node smoke_depth_engine_core.mjs` and `node smoke_rat_cellar_content.mjs`.
 - This repo is still a prototype foundation, not a full content pack.
 - The current focus is light Phase 2 preparation: a registry-backed multi-example plan without replacing direct startup.
@@ -55,6 +57,7 @@ It is designed as a bare HTML starter foundation for small RPGs: simple to run, 
 - `examples/rat-cellar/example.meta.js` defines Rat Cellar's active example identity.
 - `js/content/` is deprecated and only documents the old content location.
 - `docs/` contains engine rules and contributor guidance.
+- `.github/workflows/smoke.yml` runs the smoke checks in GitHub Actions.
 - `README.md` explains the repo at a high level.
 - `LICENSE` defines the open-source terms.
 
@@ -91,6 +94,9 @@ For more detail, see:
 - [`docs/content-vs-engine.md`](docs/content-vs-engine.md)
 - [`docs/examples.md`](docs/examples.md)
 - [`docs/multi-example-loading.md`](docs/multi-example-loading.md)
+- [`docs/save-schema.md`](docs/save-schema.md)
+- [`docs/trusted-content-rendering.md`](docs/trusted-content-rendering.md)
+- [`docs/foundation-checklist.md`](docs/foundation-checklist.md)
 - [`docs/public-starter-release.md`](docs/public-starter-release.md)
 
 ## How To Edit The Rat Cellar Example
