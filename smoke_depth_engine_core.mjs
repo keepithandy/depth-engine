@@ -160,16 +160,20 @@ try {
     currentFloor: 99,
     maxFloor: 3,
     player: { level: 2, currency: 12 },
-    inventory: ["practice-sword", 42, "old-coin"],
-    equipment: { weapon: "training-helm" },
-    log: ["legacy save"],
+    inventory: ["practice-sword", 42, "missing-item", "old-coin"],
+    equipment: { weapon: "training-helm", head: "training-helm", trinket: "missing-item", body: 99 },
+    log: ["legacy save", 99],
     completed: true,
     version: 1
   });
   assert.equal(repaired.currentStage, 3, "normalizeSaveState repairs and clamps legacy currentFloor");
   assert.equal(repaired.maxStage, 3, "normalizeSaveState repairs legacy maxFloor");
   assert.equal(repaired.version, 3, "normalizeSaveState upgrades old saves to version 3");
-  assert.deepEqual(repaired.inventory, ["practice-sword", "old-coin"], "normalizeSaveState filters invalid inventory ids");
+  assert.deepEqual(repaired.inventory, ["practice-sword", "old-coin"], "normalizeSaveState filters invalid and missing inventory ids");
+  assert.equal(repaired.equipment.weapon, null, "normalizeSaveState clears equipment ids assigned to the wrong slot");
+  assert.equal(repaired.equipment.head, "training-helm", "normalizeSaveState preserves valid equipment ids in the correct slot");
+  assert.equal(repaired.equipment.trinket, null, "normalizeSaveState clears missing equipment ids");
+  assert.deepEqual(repaired.log, ["legacy save"], "normalizeSaveState filters malformed log entries");
   assert.equal(repaired.completed, true, "normalizeSaveState preserves completed only at max stage");
 
   assert.equal(window.clampStage(-5), 1, "clampStage clamps below minimum");
