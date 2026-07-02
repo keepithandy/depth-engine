@@ -60,9 +60,9 @@ h1 { margin-bottom: 0.35rem; font-size: clamp(2rem, 4vw, 3.5rem); }
 
 .grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
 .panel { padding: 1rem; }
-.stats, .equipment, .inventory { display: grid; gap: 0.5rem; }
-.stat-row, .slot-row, .item-row, .enemy-card { display: flex; justify-content: space-between; gap: 0.75rem; align-items: center; padding: 0.75rem; border-radius: 0.9rem; background: var(--panel-2); border: 1px solid rgba(255,255,255,0.05); }
-.stat-row strong, .slot-row strong { color: var(--accent-2); }
+.stats, .equipment, .inventory, .example-list { display: grid; gap: 0.5rem; }
+.stat-row, .slot-row, .item-row, .enemy-card, .example-row { display: flex; justify-content: space-between; gap: 0.75rem; align-items: center; padding: 0.75rem; border-radius: 0.9rem; background: var(--panel-2); border: 1px solid rgba(255,255,255,0.05); }
+.stat-row strong, .slot-row strong, .example-row strong { color: var(--accent-2); }
 .progress { margin-top: 0.85rem; }
 .progress-label { display: flex; justify-content: space-between; color: var(--muted); margin-bottom: 0.35rem; font-size: 0.95rem; }
 .bar { height: 0.9rem; border-radius: 999px; background: #39291b; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); }
@@ -73,7 +73,7 @@ h1 { margin-bottom: 0.35rem; font-size: clamp(2rem, 4vw, 3.5rem); }
 .combat-actions { margin: 0.85rem 0; display: flex; gap: 0.75rem; flex-wrap: wrap; }
 .log { min-height: 9rem; color: #eadfce; white-space: pre-line; }
 .muted { color: var(--muted); }
-.item-row .details { display: grid; gap: 0.15rem; }
+.item-row .details, .example-row .details { display: grid; gap: 0.15rem; }
 .item-row .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end; }
 .app-footer {
   width: min(1080px, calc(100% - 1.5rem));
