@@ -1,6 +1,6 @@
 # Save Schema And Migration Rules
 
-This document defines the current Depth Engine save contract. It is documentation only; it does not change runtime behavior.
+This document defines the current Depth Engine save contract.
 
 ## Current Save Owner
 
@@ -79,9 +79,9 @@ The `player` object is merged over the active example's base player stats. Missi
 
 `inventory` should be an array of item ids.
 
-Current normalization keeps only string ids and drops invalid non-string entries. It does not currently validate whether every id still exists in active example content.
+Current normalization keeps only ids that are strings and still exist in the active example's item content. Missing ids and malformed entries are dropped.
 
-Future content-switching work should decide whether missing item ids are dropped, preserved as unknown ids, migrated, or quarantined in a recovery log.
+Future content-switching work can revisit whether missing item ids should be dropped, preserved as unknown ids, migrated, or quarantined in a recovery log. For the current starter, dropping stale item ids is the safest small repair.
 
 ## Equipment Repair
 
@@ -94,13 +94,13 @@ Future content-switching work should decide whether missing item ids are dropped
 - `offhand`
 - `trinket`
 
-Current normalization overlays saved equipment over the default slot map. Like inventory, it does not currently validate whether every equipped id still exists in active example content.
+Current normalization rebuilds equipment from the known slot list. It preserves only saved item ids that still exist in active example content and match the slot they are assigned to. Missing ids, malformed ids, and wrong-slot ids are cleared to `null`.
 
 ## Log Repair
 
 `log` should be an array of strings.
 
-If saved log data is malformed, normalization falls back to the new-state log.
+If saved log data is malformed, normalization falls back to the new-state log. If the log is an array, non-string entries are filtered out.
 
 ## Completion Repair
 
@@ -151,8 +151,12 @@ Use the smallest migration that keeps existing saves safe.
 - export filename comes from `GAME_CONFIG.exportFileName`
 - legacy `currentFloor` and `maxFloor` repair into stage fields
 - old save versions normalize to version 3
-- invalid inventory entries are filtered
+- invalid and missing inventory ids are filtered
+- malformed log entries are filtered
+- wrong-slot equipment ids are cleared
+- valid equipment ids in the correct slot are preserved
+- missing equipment ids are cleared
 - completion is preserved only at max stage
 - duplicate inventory ids survive equipment changes
 
-Additional future coverage should target example identity, missing content references, and malformed equipment ids before multi-example switching ships.
+Additional future coverage should target example identity before multi-example switching ships.
