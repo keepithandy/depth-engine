@@ -9,14 +9,23 @@ window.normalizeSaveState = function normalizeSaveState(data) {
   const maxStage = Number.isFinite(maxStageValue) ? Math.max(1, Math.floor(maxStageValue)) : base.maxStage;
   const stageSource = source.currentStage ?? currentFloor ?? floor ?? base.currentStage;
   const currentStage = window.clampStage(stageSource, maxStage);
+  const itemExists = (id) => typeof id === "string" && Boolean(window.getItemById(id));
+  const equipmentSlots = ["weapon", "head", "body", "feet", "offhand", "trinket"];
+  const repairedEquipment = equipmentSlots.reduce((equipment, slot) => {
+    const itemId = source.equipment?.[slot];
+    const item = itemExists(itemId) ? window.getItemById(itemId) : null;
+    equipment[slot] = item && item.slot === slot ? item.id : null;
+    return equipment;
+  }, {});
+
   return {
     ...base,
     ...sourceWithoutLegacyStage,
     player,
     currentStage,
     maxStage,
-    equipment: { weapon: null, head: null, body: null, feet: null, offhand: null, trinket: null, ...(source.equipment || {}) },
-    inventory: Array.isArray(source.inventory) ? source.inventory.filter((id) => typeof id === "string") : [],
+    equipment: repairedEquipment,
+    inventory: Array.isArray(source.inventory) ? source.inventory.filter(itemExists) : [],
     log: Array.isArray(source.log) ? source.log.filter((entry) => typeof entry === "string") : base.log,
     completed: Boolean(source.completed) && currentStage >= maxStage,
     version: Math.max(3, Number(source.version) || 0)
