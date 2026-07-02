@@ -5,12 +5,26 @@ window.render = function render() {
   const xpThreshold = window.getXpThreshold(state.player.level);
   const activeExample = window.getActiveExample();
   const stageLabel = window.getStageLabel();
+  const registeredExamples = window.getExampleRegistry();
 
   document.title = window.GAME_CONFIG.title;
   document.getElementById("loadedExampleText").textContent = `Loaded Example: ${activeExample.name}`;
   document.getElementById("goalStageHeadline").textContent = state.maxStage;
   document.getElementById("footerLoadedExample").textContent = `Loaded example: ${activeExample.name}`;
   document.getElementById("footerExamplePath").textContent = activeExample.path;
+  document.getElementById("exampleRegistryList").innerHTML = registeredExamples.length ? registeredExamples.map((example) => {
+    const activeLabel = example.id === activeExample.id ? "Active" : "Available later";
+    const statusText = example.playable ? "playable bundled example" : "planned example";
+    return `
+      <div class="example-row">
+        <div class="details">
+          <strong>${example.name}</strong>
+          <span class="muted">${activeLabel} · ${statusText}</span>
+          <span>${example.description}</span>
+          <span class="muted">${example.path}</span>
+        </div>
+      </div>`;
+  }).join("") : `<div class="muted">No registered examples found.</div>`;
   document.getElementById("playerStats").innerHTML = [
     ["Level", state.player.level],
     ["HP", `${state.player.hp} / ${state.player.maxHp}`],
