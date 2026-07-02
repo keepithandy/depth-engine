@@ -1,14 +1,19 @@
 # Example Pack Program And Template Gallery
 
-This document defines the future example-pack direction for Depth Engine.
+This document defines the example-pack direction for Depth Engine.
 
-It is a planning document only. It does not add new bundled games yet.
+Depth Engine now includes a small secondary bundled example, Arena Waves, to prove the registry and validation path without adding runtime example switching yet.
 
 ## Goal
 
 Example packs should teach people how to reshape Depth Engine into different RPG structures without bloating the core starter.
 
 A good example pack should be small, readable, local-first, and focused on one clear design idea.
+
+## Current Bundled Examples
+
+- `rat-cellar` — the default direct-loaded example.
+- `arena-waves` — a secondary bundled example that is registered and smoke-validated, but not loaded by default from `index.html`.
 
 ## What Qualifies As An Example Pack
 
@@ -35,10 +40,11 @@ Before an example pack is accepted:
 - every enemy loot id exists
 - every zone enemy id exists
 - every stage from 1 to `maxStage` has one zone
-- config has a clear title, currency, stage label, and export filename
+- config has a clear title, currency, stage label, save key, and export filename
 - text fields stay plain and reviewed
 - Rat Cellar remains playable
 - direct `index.html` startup remains intact
+- `node smoke_registered_examples_content.mjs` validates the example
 
 ## Template Gallery Ideas
 
@@ -47,7 +53,7 @@ Future examples should each prove a different RPG shape.
 Possible starter packs:
 
 1. Dungeon Crawl — staged monsters, loot, and boss finish.
-2. Arena Waves — repeated combat waves with escalating rewards.
+2. Arena Waves — repeated combat waves with escalating rewards. Included as `examples/arena-waves`.
 3. Job Board — contracts instead of floors or rooms.
 4. Survival Days — days, supplies, and attrition-flavored stages.
 5. Creature Collector — enemy ids become encounter species and loot becomes capture/reward data.
@@ -56,11 +62,17 @@ Possible starter packs:
 
 Do not add all of these at once. The best next example is the one that teaches the most with the least new code.
 
-## Recommended First New Example
+## Why Arena Waves Was Added First
 
-The safest second example would be `arena-waves` because it can reuse the existing stage, enemy, item, loot, and zone fields without needing new engine behavior.
+`arena-waves` reuses the existing stage, enemy, item, loot, and zone fields without needing new engine behavior.
 
-The point would be to prove the engine can feel different through content alone.
+The point is to prove the engine can feel different through content alone:
+
+- `stageLabel` becomes `Wave`
+- currency becomes `Medals`
+- zones become arena rounds
+- enemies become wave opponents
+- rewards stay compatible with the same generic loot and equipment systems
 
 ## Example Pack Release Policy
 
