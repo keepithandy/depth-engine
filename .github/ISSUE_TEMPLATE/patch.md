@@ -23,7 +23,10 @@ Describe what currently exists or what is missing.
 ## Acceptance Checks
 
 - [ ] Direct `index.html` startup still works.
-- [ ] Rat Cellar remains playable.
+- [ ] Rat Cellar remains playable and remains the default example.
+- [ ] Example saves remain separated when example selection is involved.
+- [ ] `node smoke_index_static_contract.mjs` passes.
+- [ ] `node smoke_example_selection_contract.mjs` passes.
 - [ ] `node smoke_depth_engine_core.mjs` passes.
 - [ ] `node smoke_rat_cellar_content.mjs` passes.
 - [ ] `node smoke_registered_examples_content.mjs` passes.
