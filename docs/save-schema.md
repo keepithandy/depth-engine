@@ -6,13 +6,29 @@ This document defines the current Depth Engine save contract.
 
 The active example owns the save key through `window.GAME_CONFIG.saveKey`.
 
-For Rat Cellar, the current key is:
+Current bundled example save keys:
 
 ```js
+// Rat Cellar
 depth-engine-demo-save-v1
+
+// Arena Waves
+depth-engine-arena-waves-save-v1
 ```
 
 Do not change an example's save key casually. Changing the key makes existing browser saves look missing unless a separate migration or compatibility plan exists.
+
+## Example Selection Save Rule
+
+The selected example id is stored separately from game progress under:
+
+```js
+depth-engine-selected-example-id
+```
+
+This key only decides which bundled example scripts load on the next page startup.
+
+It must not be used for player progress. Player progress remains owned by the active example's `GAME_CONFIG.saveKey`, so Rat Cellar and Arena Waves do not share a save slot.
 
 ## Current Save Shape
 
@@ -21,6 +37,7 @@ A normalized save contains these top-level fields:
 ```js
 {
   version: 3,
+  exampleId: "rat-cellar",
   currentStage: 1,
   maxStage: 20,
   player: {
@@ -51,6 +68,7 @@ A normalized save contains these top-level fields:
 The engine expects these fields after normalization:
 
 - `version`
+- `exampleId`
 - `currentStage`
 - `maxStage`
 - `player`
@@ -70,6 +88,14 @@ The current repair path accepts older stage names and converts them into the cur
 - `maxFloor` repairs into `maxStage`
 
 The engine clamps repaired stage values so saves do not start below stage 1 or above the active example's max stage.
+
+## Example Identity Repair
+
+`exampleId` is stamped from the currently loaded example during new-state creation, save normalization, and save writes.
+
+If an imported or old save contains a missing, stale, or different `exampleId`, normalization rewrites it to the active example id. Content ids are still validated against the active example before inventory or equipment is used.
+
+This keeps the current starter forgiving while still making exported saves visibly identify the example that last normalized them.
 
 ## Player Repair
 
@@ -116,22 +142,6 @@ version: Math.max(3, Number(source.version) || 0)
 
 For now, `version` is a global engine save version, not an example-specific schema version.
 
-## Future Example Identity Strategy
-
-Multi-example loading will need a stricter save identity decision before example switching becomes real.
-
-Recommended future save identity fields:
-
-```js
-{
-  engineSaveVersion: 3,
-  exampleId: "rat-cellar",
-  exampleSaveVersion: 1
-}
-```
-
-Until that is implemented, example switching should be treated as a design risk. Do not silently load one example's save into another example without a clear rule.
-
 ## Migration Policy
 
 Use the smallest migration that keeps existing saves safe.
@@ -159,4 +169,12 @@ Use the smallest migration that keeps existing saves safe.
 - completion is preserved only at max stage
 - duplicate inventory ids survive equipment changes
 
-Additional future coverage should target example identity before multi-example switching ships.
+`smoke_example_selection_contract.mjs` checks:
+
+- default example selection resolves to Rat Cellar
+- stored Arena Waves selection writes Arena Waves scripts
+- query-string selection can override stored selection
+- invalid stored selection falls back safely
+- selecting a bundled example stores the selected id and reloads
+
+`smoke_registered_examples_content.mjs` validates every bundled example listed in the manifest.
