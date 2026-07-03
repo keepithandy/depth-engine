@@ -123,6 +123,7 @@ For more detail, see:
 - [`docs/foundation-checklist.md`](docs/foundation-checklist.md)
 - [`docs/extension-hooks.md`](docs/extension-hooks.md)
 - [`docs/content-authoring.md`](docs/content-authoring.md)
+- [`docs/copy-an-example.md`](docs/copy-an-example.md)
 - [`docs/release-workflow.md`](docs/release-workflow.md)
 - [`docs/example-pack-program.md`](docs/example-pack-program.md)
 - [`docs/public-starter-release.md`](docs/public-starter-release.md)
@@ -141,6 +142,8 @@ If you want to make a new RPG theme, start here:
 8. Add the example to `examples/examples.manifest.js`.
 9. Refresh the browser and choose the new example from Registered Examples.
 10. Use Reset Save if you want a clean run.
+
+For the full guide, see [`docs/copy-an-example.md`](docs/copy-an-example.md).
 
 Keep ids stable when you can, and update any references if you rename content ids.
 
