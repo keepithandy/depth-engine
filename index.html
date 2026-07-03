@@ -52,6 +52,7 @@
 
       <article class="panel example-panel">
         <h2>Registered Examples</h2>
+        <p class="muted">Switching examples uses a separate save slot. Your current example save stays intact.</p>
         <div id="exampleRegistryList" class="example-list"></div>
       </article>
 
@@ -74,20 +75,11 @@
   </main>
   <footer class="app-footer"><span id="footerLoadedExample">Loaded example: Example Content</span>. Copy <span id="footerExamplePath">examples/</span> to start your own RPG.</footer>
 
-  <!-- Example registry prepares future multi-example loading. -->
+  <!-- Example registry prepares multi-example loading. -->
   <script src="examples/examples.manifest.js"></script>
 
-  <!-- Loaded example metadata lives with the example content. -->
-  <script src="examples/rat-cellar/example.meta.js"></script>
-
-  <!-- Generic active example helpers. -->
-  <script src="js/engine/content-loader.js"></script>
-
-  <!-- Loaded example content: direct scripts preserve browser-file compatibility. -->
-  <script src="examples/rat-cellar/game.config.js"></script>
-  <script src="examples/rat-cellar/items.js"></script>
-  <script src="examples/rat-cellar/enemies.js"></script>
-  <script src="examples/rat-cellar/zones.js"></script>
+  <!-- Local-first selected example loader. -->
+  <script src="js/engine/example-loader.js"></script>
 
   <!-- Engine systems -->
   <script src="js/engine/state.js"></script>
