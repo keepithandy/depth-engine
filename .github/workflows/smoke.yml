@@ -22,6 +22,9 @@ jobs:
       - name: Run index startup contract smoke test
         run: node smoke_index_static_contract.mjs
 
+      - name: Run example selection contract smoke test
+        run: node smoke_example_selection_contract.mjs
+
       - name: Run core smoke test
         run: node smoke_depth_engine_core.mjs
 
