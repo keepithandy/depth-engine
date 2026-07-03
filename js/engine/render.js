@@ -4,6 +4,7 @@ window.render = function render() {
   const stats = window.getTotalPlayerStats();
   const xpThreshold = window.getXpThreshold(state.player.level);
   const activeExample = window.getActiveExample();
+  const selectionStatus = window.getExampleSelectionStatus();
   const stageLabel = window.getStageLabel();
   const registeredExamples = window.getExampleRegistry();
 
@@ -13,8 +14,14 @@ window.render = function render() {
   document.getElementById("footerLoadedExample").textContent = `Loaded example: ${activeExample.name}`;
   document.getElementById("footerExamplePath").textContent = activeExample.path;
   document.getElementById("exampleRegistryList").innerHTML = registeredExamples.length ? registeredExamples.map((example) => {
-    const activeLabel = example.id === activeExample.id ? "Active" : "Available later";
+    const isActive = example.id === activeExample.id;
+    const canSelect = window.isExampleSelectable(example.id);
+    const activeLabel = isActive ? "Active now" : canSelect ? "Available" : "Planned";
     const statusText = example.playable ? "playable bundled example" : "planned example";
+    const fallbackText = selectionStatus.fallbackUsed && isActive ? `<span class="muted">Invalid selection repaired to this example.</span>` : "";
+    const action = isActive
+      ? `<button type="button" disabled>Active</button>`
+      : `<button type="button" data-action="select-example" data-example-id="${example.id}" ${canSelect ? "" : "disabled"}>Load Example</button>`;
     return `
       <div class="example-row">
         <div class="details">
@@ -22,6 +29,10 @@ window.render = function render() {
           <span class="muted">${activeLabel} · ${statusText}</span>
           <span>${example.description}</span>
           <span class="muted">${example.path}</span>
+          ${fallbackText}
+        </div>
+        <div class="actions">
+          ${action}
         </div>
       </div>`;
   }).join("") : `<div class="muted">No registered examples found.</div>`;
@@ -86,6 +97,7 @@ function boot() {
   const resetBtn = document.getElementById("resetSaveBtn");
   const importInput = document.getElementById("importSaveInput");
   const inventoryList = document.getElementById("inventoryList");
+  const exampleRegistryList = document.getElementById("exampleRegistryList");
 
   fightBtn.addEventListener("click", () => {
     window.resolveFight();
@@ -107,6 +119,12 @@ function boot() {
     if (!itemId) return;
     if (button.dataset.action === "equip") window.equipItem(itemId);
     if (button.dataset.action === "sell") window.sellItem(itemId);
+  });
+
+  exampleRegistryList.addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-action='select-example']");
+    if (!button) return;
+    window.selectDepthEngineExample(button.dataset.exampleId);
   });
 
   window.render();
