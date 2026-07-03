@@ -29,8 +29,10 @@ What happens now?
 Choose any that apply:
 
 - [ ] direct `index.html` startup
+- [ ] example selection
 - [ ] core engine
 - [ ] Rat Cellar example
+- [ ] Arena Waves example
 - [ ] registered example validation
 - [ ] save/load/import/export/reset
 - [ ] combat/rewards/loot
@@ -40,6 +42,8 @@ Choose any that apply:
 
 ## Checks Tried
 
+- [ ] `node smoke_index_static_contract.mjs`
+- [ ] `node smoke_example_selection_contract.mjs`
 - [ ] `node smoke_depth_engine_core.mjs`
 - [ ] `node smoke_rat_cellar_content.mjs`
 - [ ] `node smoke_registered_examples_content.mjs`
