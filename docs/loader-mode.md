@@ -1,16 +1,18 @@
 # Loader Mode Decision
 
-Depth Engine uses a hybrid loader path for the next phase:
+Depth Engine uses a local-first selected-example loader:
 
-- direct-script loading remains the default runtime path
-- the example registry is the source of truth for known examples
-- the UI can show registered examples before dynamic switching exists
-- bundled secondary examples can exist before runtime switching exists
-- dynamic script loading is deferred until save identity and hosted/direct startup rules are ready
+- `examples/examples.manifest.js` remains the source of truth for known examples
+- `js/engine/example-loader.js` chooses the selected bundled example before engine systems load
+- selected example scripts are written during normal HTML parsing
+- the app still runs from `index.html` without npm, a build step, a server, or fetch-based content loading
+- the registered-examples UI can switch between bundled playable examples by storing the selected example id and reloading
 
 ## Current Default
 
-`index.html` still loads Rat Cellar directly so the project works from a local file path without a server.
+Rat Cellar remains the default example because it is the first bundled registry entry.
+
+`index.html` still works from a local file path without a server. It now loads the manifest, then the local example-loader, then the generic engine systems.
 
 This preserves the no-build, no-install starter promise.
 
@@ -23,36 +25,44 @@ Current bundled examples:
 - Rat Cellar
 - Arena Waves
 
-`js/engine/content-loader.js` normalizes the registry and active example metadata. The active example must be present in the registry.
+`js/engine/content-loader.js` normalizes the registry and active example metadata after the selected example metadata script has loaded. The active example must be present in the registry.
 
 ## Active Example Rule
 
-For now, the active example is chosen by the script tags in `index.html`.
+For now, the active example is chosen by:
 
-That means Rat Cellar remains the default active example until a later issue adds real runtime switching.
+1. `?example=<example-id>` in the URL, when present
+2. stored selected example id from `depth-engine-selected-example-id`
+3. the first bundled registry entry, currently Rat Cellar
 
-Arena Waves is bundled and validated, but it is not the active direct-load example unless `index.html` script paths are manually changed in a focused test branch.
+Invalid selections fall back to Rat Cellar and repair the stored selected example id.
 
 ## Selection Surface
 
-The app may show a small registered-example surface that reads from the registry. This proves the UI no longer treats Rat Cellar as the hidden engine identity.
+The Registered Examples panel shows bundled examples and exposes a Load Example action for selectable examples.
 
-The selector/status surface is read-only until dynamic loading and save identity rules exist.
+Switching examples stores the requested example id, reloads the page, and loads that example's local content scripts before the engine starts.
+
+The panel warns that each example uses a separate save slot.
+
+## Save Separation
+
+The selected example id is not player progress. It only controls which scripts load.
+
+Player progress still uses the active example's `GAME_CONFIG.saveKey`:
+
+- Rat Cellar uses `depth-engine-demo-save-v1`
+- Arena Waves uses `depth-engine-arena-waves-save-v1`
 
 ## Dynamic Loading Deferred
 
-Do not add dynamic script injection yet.
+Depth Engine still does not load remote examples or arbitrary third-party content.
 
-Before dynamic loading ships, the repo still needs:
-
-- save identity rules for example switching
-- a clear local-file versus hosted-mode decision
-- smoke coverage proving Rat Cellar remains the default direct-load example
-- smoke coverage proving every bundled registered example has valid content
+This selector uses local script loading only. A hosted fetch/import loader remains deferred until the repo has stronger content validation, save migration rules, and a clear trust policy.
 
 ## Guardrails
 
-- Keep Rat Cellar opening directly from `index.html`.
+- Keep Rat Cellar as the default registry entry.
 - Keep the registry generic.
 - Keep Arena Waves content-owned under `examples/arena-waves/`.
 - Do not add a build step.
