@@ -3,6 +3,7 @@ window.normalizeSaveState = function normalizeSaveState(data) {
   const source = data && typeof data === "object" ? data : {};
   // Legacy saves may contain floor/currentFloor/maxFloor; repair them into stage fields.
   const { currentFloor, floor, maxFloor, ...sourceWithoutLegacyStage } = source;
+  const activeExample = window.getActiveExample?.() || { id: "example" };
   const player = { ...window.GAME_CONFIG.basePlayer, ...(source.player || {}) };
   const maxStageSource = source.maxStage ?? maxFloor ?? base.maxStage;
   const maxStageValue = Number(maxStageSource);
@@ -21,6 +22,7 @@ window.normalizeSaveState = function normalizeSaveState(data) {
   return {
     ...base,
     ...sourceWithoutLegacyStage,
+    exampleId: activeExample.id,
     player,
     currentStage,
     maxStage,
@@ -44,6 +46,7 @@ window.loadGame = function loadGame() {
 };
 
 window.saveGame = function saveGame() {
+  window.GameState.exampleId = window.getActiveExample?.().id || window.GameState.exampleId || "example";
   localStorage.setItem(window.GAME_CONFIG.saveKey, JSON.stringify(window.GameState));
 };
 
