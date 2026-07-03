@@ -1,6 +1,6 @@
 // Generic active-example helpers. Example metadata should be loaded before this file
-// from the active example folder. For now, index.html still loads example scripts
-// directly to avoid fetch() and keep file:// startup working.
+// from the selected example folder. The local example-loader writes those scripts
+// during normal HTML parsing so file:// startup remains supported.
 const DEPTH_ENGINE_FALLBACK_EXAMPLE = {
   id: "example",
   name: "Example Content",
@@ -42,6 +42,12 @@ window.normalizeExampleRegistry = function normalizeExampleRegistry(registry = [
 
 window.DEPTH_ENGINE_EXAMPLE_REGISTRY = window.normalizeExampleRegistry(window.DEPTH_ENGINE_EXAMPLE_REGISTRY);
 window.DEPTH_ENGINE_ACTIVE_EXAMPLE = window.normalizeActiveExampleMetadata(window.DEPTH_ENGINE_EXAMPLE_META);
+window.DEPTH_ENGINE_SELECTED_EXAMPLE_ID = window.DEPTH_ENGINE_SELECTED_EXAMPLE_ID || window.DEPTH_ENGINE_ACTIVE_EXAMPLE.id;
+window.DEPTH_ENGINE_EXAMPLE_SELECTION_STATUS = window.DEPTH_ENGINE_EXAMPLE_SELECTION_STATUS || {
+  requestedId: window.DEPTH_ENGINE_ACTIVE_EXAMPLE.id,
+  activeId: window.DEPTH_ENGINE_ACTIVE_EXAMPLE.id,
+  fallbackUsed: false
+};
 
 window.getExampleRegistry = function getExampleRegistry() {
   return window.DEPTH_ENGINE_EXAMPLE_REGISTRY.map((entry) => ({
@@ -64,6 +70,25 @@ window.getActiveExample = function getActiveExample() {
     contentFiles: [...(window.DEPTH_ENGINE_ACTIVE_EXAMPLE.contentFiles || [])]
   };
 };
+
+window.getSelectedExampleId = function getSelectedExampleId() {
+  return window.DEPTH_ENGINE_SELECTED_EXAMPLE_ID || window.getActiveExample().id;
+};
+
+window.getExampleSelectionStatus = function getExampleSelectionStatus() {
+  return { ...window.DEPTH_ENGINE_EXAMPLE_SELECTION_STATUS };
+};
+
+window.isExampleSelectable = function isExampleSelectable(id) {
+  const example = window.getRegisteredExampleById(id);
+  return Boolean(example && example.playable && example.bundled);
+};
+
+if (typeof window.selectDepthEngineExample !== "function") {
+  window.selectDepthEngineExample = function selectDepthEngineExampleFallback(id) {
+    return window.isExampleSelectable(id) && id === window.getActiveExample().id;
+  };
+}
 
 window.getActiveExamplePath = function getActiveExamplePath() {
   return window.DEPTH_ENGINE_ACTIVE_EXAMPLE.path;
