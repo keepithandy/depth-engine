@@ -1,4 +1,5 @@
 window.GameState = {
+  exampleId: "example",
   player: null,
   // currentStage is generic progression; examples decide how to label it.
   currentStage: 1,
@@ -48,7 +49,9 @@ window.getZoneByStage = function getZoneByStage(stage, maxStage = window.GameSta
 
 window.createNewState = function createNewState() {
   const maxStage = window.getConfiguredMaxStage();
+  const activeExample = window.getActiveExample?.() || { id: "example" };
   return {
+    exampleId: activeExample.id,
     player: { ...window.GAME_CONFIG.basePlayer },
     currentStage: 1,
     maxStage,
