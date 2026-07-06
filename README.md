@@ -14,10 +14,10 @@ It is designed as a bare HTML starter foundation for small RPGs: simple to run, 
 
 ## Current Prototype Status
 
-- Current checkpoint: v0.4.1 Example Switching Foundation.
+- Current checkpoint: v0.5 Sewer Patrol Content Example.
 - The default loaded example is Rat Cellar.
-- The bundled example registry includes Rat Cellar and Arena Waves.
-- Arena Waves is selectable from the Registered Examples panel.
+- The bundled example registry includes Rat Cellar, Arena Waves, and Sewer Patrol.
+- Arena Waves and Sewer Patrol are selectable from the Registered Examples panel.
 - The selected example id is stored locally and the page reloads into that bundled example.
 - Each example keeps its own save slot through its own `GAME_CONFIG.saveKey`.
 - The stage-based combat loop, XP gain, currency, loot, equipment, selling, save, export/import, and reset flows are working.
@@ -27,7 +27,7 @@ It is designed as a bare HTML starter foundation for small RPGs: simple to run, 
 - Save schema rules, trusted rendering assumptions, foundation hardening checks, loader mode, hooks, content authoring, release workflow, and example-pack rules are documented under `docs/`.
 - Validated by `node smoke_index_static_contract.mjs`, `node smoke_example_selection_contract.mjs`, `node smoke_depth_engine_core.mjs`, `node smoke_rat_cellar_content.mjs`, and `node smoke_registered_examples_content.mjs`.
 - This repo is still a prototype foundation, not a full content pack.
-- The current focus is light Phase 2 preparation: selectable bundled examples without remote content loading or a build step.
+- The current focus is proving bundled examples without remote content loading or a build step.
 - Phase 4 public starter release strategy is documented, but publishing and package management are not part of the current prototype.
 
 ## How To Run Locally
@@ -48,7 +48,7 @@ It is designed as a bare HTML starter foundation for small RPGs: simple to run, 
 - Export/import for moving saves between browsers.
 - Reset for starting fresh.
 - Registered example selector powered by `examples/examples.manifest.js`.
-- Two bundled content examples: Rat Cellar and Arena Waves.
+- Three bundled content examples: Rat Cellar, Arena Waves, and Sewer Patrol.
 - Separate save slots per bundled example.
 
 ## Smoke Checks
@@ -75,6 +75,7 @@ The index static smoke guards required DOM ids and the selected-example loader c
 - `examples/examples.manifest.js` lists registered example entries.
 - `examples/rat-cellar/` contains the default bundled example game data and metadata.
 - `examples/arena-waves/` contains the secondary bundled example.
+- `examples/sewer-patrol/` contains the third bundled example.
 - `js/content/` is deprecated and only documents the old content location.
 - `docs/` contains engine rules and contributor guidance.
 - `.github/workflows/smoke.yml` runs the smoke checks in GitHub Actions.
@@ -95,6 +96,7 @@ The engine stays generic. Example content defines the playable theme the engine 
 - `examples/rat-cellar/enemies.js` defines encounters, rewards, and loot tables.
 - `examples/rat-cellar/zones.js` maps stages to zone names and enemy ids.
 - `examples/arena-waves/` proves the same engine fields can present stages as combat waves instead of cellar rooms.
+- `examples/sewer-patrol/` proves a third theme can use the same engine fields without engine-specific rewrites.
 
 These files are the main place to build a new RPG theme without rewriting the engine.
 
@@ -106,10 +108,12 @@ For the current manual example workflow, see [`docs/examples.md`](docs/examples.
 
 - Default example: Rat Cellar
 - Secondary selectable example: Arena Waves
+- Third selectable example: Sewer Patrol
 - Default example path: `examples/rat-cellar`
 - Secondary example path: `examples/arena-waves`
+- Third example path: `examples/sewer-patrol`
 
-Rat Cellar is included as Example Game #1 only. It is not the identity of the engine. Arena Waves is included as a secondary bundled example for selection and validation coverage.
+Rat Cellar is included as Example Game #1 only. It is not the identity of the engine. Arena Waves and Sewer Patrol are additional bundled examples for selection and validation coverage.
 
 For more detail, see:
 
@@ -118,68 +122,3 @@ For more detail, see:
 - [`docs/examples.md`](docs/examples.md)
 - [`docs/multi-example-loading.md`](docs/multi-example-loading.md)
 - [`docs/loader-mode.md`](docs/loader-mode.md)
-- [`docs/save-schema.md`](docs/save-schema.md)
-- [`docs/trusted-content-rendering.md`](docs/trusted-content-rendering.md)
-- [`docs/foundation-checklist.md`](docs/foundation-checklist.md)
-- [`docs/extension-hooks.md`](docs/extension-hooks.md)
-- [`docs/content-authoring.md`](docs/content-authoring.md)
-- [`docs/copy-an-example.md`](docs/copy-an-example.md)
-- [`docs/release-workflow.md`](docs/release-workflow.md)
-- [`docs/example-pack-program.md`](docs/example-pack-program.md)
-- [`docs/public-starter-release.md`](docs/public-starter-release.md)
-
-## How To Edit Or Copy An Example
-
-If you want to make a new RPG theme, start here:
-
-1. Copy an existing folder under `examples/`, such as `examples/arena-waves/`.
-2. Rename the copied folder.
-3. Edit `example.meta.js` to change the example id, name, path, description, and content file list.
-4. Edit `game.config.js` to change the example title, currency name, stage label, stage cap, save key, and export filename.
-5. Edit `items.js` to replace the item list.
-6. Edit `enemies.js` to replace the encounter list.
-7. Edit `zones.js` to rename the stage map.
-8. Add the example to `examples/examples.manifest.js`.
-9. Refresh the browser and choose the new example from Registered Examples.
-10. Use Reset Save if you want a clean run.
-
-For the full guide, see [`docs/copy-an-example.md`](docs/copy-an-example.md).
-
-Keep ids stable when you can, and update any references if you rename content ids.
-
-## How To Add Future Examples
-
-1. Create a new folder under `examples/`, such as `examples/new-game-name/`.
-2. Add `example.meta.js`, `game.config.js`, `items.js`, `enemies.js`, and `zones.js`.
-3. Add the example to `examples/examples.manifest.js`.
-4. Keep engine code in `js/engine/` generic and reusable.
-5. Keep example-specific lore, names, labels, and data inside the example folder.
-6. Give the example a unique `saveKey` and `exportFileName`.
-7. Run all five smoke scripts after the change.
-
-## Contribution Note
-
-This is an open-source starter project. Contributions should keep the engine generic, preserve the working examples, and keep content separated from core logic.
-
-Before opening a change, run the test checklist in `CONTRIBUTING.md`.
-
-## Current Limitations
-
-- Only bundled local examples can be selected.
-- Remote example loading is not implemented.
-- Third-party content loading is not supported.
-- There is no build system.
-- There is no plugin system yet.
-- There is a small save repair path, not a formal migration framework yet.
-- Public starter packaging is documented as a future direction, not implemented yet.
-- The project is intentionally small and focused on the starter engine loop.
-
-## Next Roadmap Steps
-
-See [`ROADMAP.md`](ROADMAP.md) for the planned phases:
-
-- v0.4 selectable bundled examples follow-up
-- v0.5 save migration docs
-- v0.6 hooks/plugin foundation
-- v1.0 stable starter release strategy
-- v1.0 stable starter release
