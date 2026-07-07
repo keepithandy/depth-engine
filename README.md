@@ -4,6 +4,24 @@ Depth Engine is a lightweight open-source browser RPG engine built with plain HT
 
 It is designed as a bare HTML starter foundation for small RPGs: simple to run, easy to read, and structured so reusable engine logic stays separate from example game content. The goal is to give people a clean core they can copy, study, and reshape into their own RPG.
 
+## Try It First
+
+Open `index.html` directly in a browser. No install step, build step, package manager, or local server is required.
+
+The default example is **Rat Cellar**. Use the Registered Examples panel to switch to **Arena Waves** or **Sewer Patrol**.
+
+Run the current smoke checks from the repo root with:
+
+```bash
+node smoke_index_static_contract.mjs
+node smoke_example_selection_contract.mjs
+node smoke_depth_engine_core.mjs
+node smoke_rat_cellar_content.mjs
+node smoke_registered_examples_content.mjs
+```
+
+Current status: active reusable-engine prototype. The project is proving bundled examples and public starter-readiness without remote content loading or a build step.
+
 ## What Depth Engine Is
 
 - A browser-first RPG engine foundation.
@@ -118,7 +136,3 @@ Rat Cellar is included as Example Game #1 only. It is not the identity of the en
 For more detail, see:
 
 - [`docs/engine-principles.md`](docs/engine-principles.md)
-- [`docs/content-vs-engine.md`](docs/content-vs-engine.md)
-- [`docs/examples.md`](docs/examples.md)
-- [`docs/multi-example-loading.md`](docs/multi-example-loading.md)
-- [`docs/loader-mode.md`](docs/loader-mode.md)
