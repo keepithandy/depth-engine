@@ -43,6 +43,7 @@ Current status: active reusable-engine prototype. The project is proving bundled
 - Equipment changes remove one selected inventory entry at a time, so duplicate item ids remain safe.
 - GitHub Actions now runs all smoke scripts on pushes to `main` and on pull requests.
 - Save schema rules, trusted rendering assumptions, foundation hardening checks, loader mode, hooks, content authoring, release workflow, and example-pack rules are documented under `docs/`.
+- Agent owner lanes for future work are documented in [`AGENTS.md`](AGENTS.md).
 - Validated by `node smoke_index_static_contract.mjs`, `node smoke_example_selection_contract.mjs`, `node smoke_depth_engine_core.mjs`, `node smoke_rat_cellar_content.mjs`, and `node smoke_registered_examples_content.mjs`.
 - This repo is still a prototype foundation, not a full content pack.
 - The current focus is proving bundled examples without remote content loading or a build step.
@@ -83,6 +84,20 @@ node smoke_registered_examples_content.mjs
 
 The index static smoke guards required DOM ids and the selected-example loader contract. The example selection smoke guards default Rat Cellar startup, Arena Waves selection, invalid-selection fallback, and reload behavior. The registered-example smoke validates every bundled example listed in `examples/examples.manifest.js`.
 
+## Work Tracking
+
+Use [`AGENTS.md`](AGENTS.md) to assign future issues to a primary owner lane before implementation.
+
+Current lanes:
+
+- Architect
+- Core Runtime
+- Content Systems
+- Rendering UI
+- Testing Warden
+- Documentation
+- Release Manager
+
 ## Folder Structure
 
 - `index.html` is the entry point and visible shell.
@@ -98,6 +113,7 @@ The index static smoke guards required DOM ids and the selected-example loader c
 - `docs/` contains engine rules and contributor guidance.
 - `.github/workflows/smoke.yml` runs the smoke checks in GitHub Actions.
 - `README.md` explains the repo at a high level.
+- `AGENTS.md` defines owner lanes for future issues.
 - `LICENSE` defines the open-source terms.
 
 ## Engine Vs Example Content
@@ -136,3 +152,7 @@ Rat Cellar is included as Example Game #1 only. It is not the identity of the en
 For more detail, see:
 
 - [`docs/engine-principles.md`](docs/engine-principles.md)
+- [`docs/content-vs-engine.md`](docs/content-vs-engine.md)
+- [`docs/examples.md`](docs/examples.md)
+- [`docs/multi-example-loading.md`](docs/multi-example-loading.md)
+- [`docs/public-starter-release.md`](docs/public-starter-release.md)
