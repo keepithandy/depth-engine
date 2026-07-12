@@ -36,6 +36,14 @@ function assertUniqueIds(entries, label, exampleId) {
   assert.equal(new Set(ids).size, ids.length, `${exampleId}: ${label} ids must be unique`);
 }
 
+function assertUniqueExampleValue(seenValues, value, label, exampleId) {
+  if (seenValues.has(value)) {
+    assert.fail(`${exampleId}: ${label} must be unique; already used by ${seenValues.get(value)}`);
+  }
+
+  seenValues.set(value, exampleId);
+}
+
 function validateMetadata(example, activeExample, registryEntry) {
   assert.equal(activeExample.id, example.id, `${example.id}: active metadata id must match registry id`);
   assert.equal(activeExample.name, example.name, `${example.id}: active metadata name must match registry name`);
@@ -137,6 +145,9 @@ assertUniqueIds(registry, "Example", "registry");
 const bundledExamples = registry.filter((example) => example.bundled);
 assert.ok(bundledExamples.length > 0, "Example registry must include at least one bundled example");
 
+const saveKeys = new Map();
+const exportFileNames = new Map();
+
 bundledExamples.forEach((example) => {
   assertString(example.id, "registry example id");
   assertString(example.name, `${example.id}: registry name`);
@@ -161,6 +172,8 @@ bundledExamples.forEach((example) => {
 
   validateMetadata(example, activeExample, registryEntry);
   validateConfig(context, example);
+  assertUniqueExampleValue(saveKeys, context.GAME_CONFIG.saveKey, "GAME_CONFIG.saveKey", example.id);
+  assertUniqueExampleValue(exportFileNames, context.GAME_CONFIG.exportFileName, "GAME_CONFIG.exportFileName", example.id);
   validateItems(context, example);
   validateEnemies(context, example);
   validateZones(context, example);
