@@ -84,6 +84,12 @@ node smoke_registered_examples_content.mjs
 
 The index static smoke guards required DOM ids and the selected-example loader contract. The example selection smoke guards default Rat Cellar startup, Arena Waves selection, invalid-selection fallback, and reload behavior. The registered-example smoke validates every bundled example listed in `examples/examples.manifest.js`.
 
+## Starter And Release Guidance
+
+- Use [`docs/starter-customization.md`](docs/starter-customization.md) when turning the starter into a new RPG theme.
+- Use [`docs/release-readiness-checklist.md`](docs/release-readiness-checklist.md) before tagging, recommending, or sharing a named starter snapshot.
+- Use [`docs/hooks.md`](docs/hooks.md) to understand the first safe hook boundary before adding extension code.
+
 ## Work Tracking
 
 Use [`AGENTS.md`](AGENTS.md) to assign future issues to a primary owner lane before implementation.
@@ -154,5 +160,8 @@ For more detail, see:
 - [`docs/engine-principles.md`](docs/engine-principles.md)
 - [`docs/content-vs-engine.md`](docs/content-vs-engine.md)
 - [`docs/examples.md`](docs/examples.md)
+- [`docs/starter-customization.md`](docs/starter-customization.md)
 - [`docs/multi-example-loading.md`](docs/multi-example-loading.md)
+- [`docs/hooks.md`](docs/hooks.md)
 - [`docs/public-starter-release.md`](docs/public-starter-release.md)
+- [`docs/release-readiness-checklist.md`](docs/release-readiness-checklist.md)
