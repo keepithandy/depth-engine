@@ -33,3 +33,6 @@ jobs:
 
       - name: Run registered examples content smoke test
         run: node smoke_registered_examples_content.mjs
+
+      - name: Run Depth Kit Lab content smoke test
+        run: node smoke_depth_kit_lab_example.mjs
