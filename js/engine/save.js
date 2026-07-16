@@ -1,3 +1,45 @@
+window.getSaveVersionCompatibility = function getSaveVersionCompatibility(version) {
+  const currentVersion = window.DEPTH_ENGINE_SAVE_VERSION;
+  const validVersion = typeof version === "number"
+    && Number.isFinite(version)
+    && Number.isInteger(version)
+    && version >= 1;
+
+  if (!validVersion) {
+    return {
+      status: "malformed",
+      sourceVersion: null,
+      currentVersion,
+      knownCompatible: false
+    };
+  }
+
+  if (version < currentVersion) {
+    return {
+      status: "legacy",
+      sourceVersion: version,
+      currentVersion,
+      knownCompatible: true
+    };
+  }
+
+  if (version === currentVersion) {
+    return {
+      status: "current",
+      sourceVersion: version,
+      currentVersion,
+      knownCompatible: true
+    };
+  }
+
+  return {
+    status: "future",
+    sourceVersion: version,
+    currentVersion,
+    knownCompatible: false
+  };
+};
+
 window.normalizeSaveState = function normalizeSaveState(data) {
   const base = window.createNewState();
   const source = data && typeof data === "object" ? data : {};
@@ -47,7 +89,7 @@ window.normalizeSaveState = function normalizeSaveState(data) {
     inventory: Array.isArray(source.inventory) ? source.inventory.filter(itemExists) : [],
     log: Array.isArray(source.log) ? source.log.filter((entry) => typeof entry === "string") : base.log,
     completed: Boolean(source.completed) && currentStage >= maxStage,
-    version: Math.max(3, Number(source.version) || 0)
+    version: Math.max(window.DEPTH_ENGINE_SAVE_VERSION, Number(source.version) || 0)
   };
 };
 
