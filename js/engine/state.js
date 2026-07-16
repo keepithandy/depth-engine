@@ -1,3 +1,5 @@
+window.DEPTH_ENGINE_SAVE_VERSION = 3;
+
 window.GameState = {
   exampleId: "example",
   player: null,
@@ -9,7 +11,7 @@ window.GameState = {
   equipment: { weapon: null, head: null, body: null, feet: null, offhand: null, trinket: null },
   log: [],
   completed: false,
-  version: 3
+  version: window.DEPTH_ENGINE_SAVE_VERSION
 };
 
 window.cloneState = function cloneState(state) {
@@ -59,6 +61,6 @@ window.createNewState = function createNewState() {
     equipment: { weapon: null, head: null, body: null, feet: null, offhand: null, trinket: null },
     completed: false,
     log: [window.GAME_CONFIG.startLog || "Run started."],
-    version: 3
+    version: window.DEPTH_ENGINE_SAVE_VERSION
   };
 };

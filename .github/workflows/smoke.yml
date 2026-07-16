@@ -34,6 +34,9 @@ jobs:
       - name: Run save player-repair contract smoke test
         run: node smoke_save_player_repair_contract.mjs
 
+      - name: Run save version compatibility contract smoke test
+        run: node smoke_save_version_compatibility_contract.mjs
+
       - name: Run Rat Cellar content smoke test
         run: node smoke_rat_cellar_content.mjs
 

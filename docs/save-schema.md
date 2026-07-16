@@ -159,13 +159,43 @@ If saved log data is malformed, normalization falls back to the new-state log. I
 
 ## Version Rule
 
-Current saves normalize to at least version `3`:
+`window.DEPTH_ENGINE_SAVE_VERSION` is the single current engine save-version value. It is currently `3` and is used by the initial state, new-state creation, and save normalization.
+
+Legacy saves still normalize to at least the current version:
 
 ```js
-version: Math.max(3, Number(source.version) || 0)
+version: Math.max(window.DEPTH_ENGINE_SAVE_VERSION, Number(source.version) || 0)
 ```
 
-For now, `version` is a global engine save version, not an example-specific schema version.
+A higher numeric version remains preserved. The `version` field is a global engine save version, not an example-specific schema version.
+
+## Save Version Compatibility Classification
+
+`getSaveVersionCompatibility(version)` is a read-only contract for classifying the raw saved version before any future warning or rejection policy is added.
+
+Only positive integer numbers are schema-valid version values.
+
+| Status | Condition | `knownCompatible` | Current policy |
+| --- | --- | --- | --- |
+| `legacy` | Positive integer below the current version | `true` | Known repair path; normalization upgrades it to the current version. |
+| `current` | Exactly the current version | `true` | Current schema contract. |
+| `future` | Positive integer above the current version | `false` | Detectable and preserved, but not claimed as fully supported. |
+| `malformed` | Missing, nonnumeric, nonfinite, fractional, non-positive, string, object, or array value | `false` | Detectable as invalid schema input; existing permissive normalization remains unchanged. |
+
+The returned contract contains:
+
+```js
+{
+  status: "legacy" | "current" | "future" | "malformed",
+  sourceVersion: 1 | 3 | 4 | null,
+  currentVersion: 3,
+  knownCompatible: true | false
+}
+```
+
+This classification does not currently block `loadGame()` or `importSave()`. It does not delete, reset, quarantine, rewrite, or warn about a save by itself. A future version remains available to normalization and export, while the compatibility contract makes clear that the current engine has not declared that schema fully supported.
+
+`knownCompatible` describes the documented schema relationship. It does not mean normalization is prohibited when the value is `false`.
 
 ## Migration Policy
 
@@ -178,6 +208,7 @@ Use the smallest migration that keeps existing saves safe.
 5. Avoid content-specific repair logic inside generic engine files.
 6. Do not reset existing saves unless the release notes clearly mark the change as breaking.
 7. Do not change an example's `saveKey` without a dedicated issue.
+8. Classify future save versions before enabling warnings, rejection, quarantine, or destructive behavior.
 
 ## Current Smoke Coverage
 
@@ -210,6 +241,17 @@ Use the smallest migration that keeps existing saves safe.
 - valid finite attack and defense values remain unchanged;
 - unknown player extension fields survive normalization;
 - array player payloads fall back to the active example baseline.
+
+`smoke_save_version_compatibility_contract.mjs` checks:
+
+- the initial state, new saves, and normalization use one canonical current version;
+- version `1` classifies as known-compatible `legacy`;
+- version `3` classifies as known-compatible `current`;
+- a higher positive integer classifies as `future` without claiming compatibility;
+- missing, string, fractional, nonfinite, non-positive, object, and array values classify as `malformed`;
+- legacy and current normalization remain compatible;
+- a future numeric version remains preserved;
+- existing permissive numeric-string normalization remains unchanged.
 
 `smoke_example_selection_contract.mjs` checks:
 
