@@ -48,7 +48,7 @@ function validateMetadata(example, activeExample, registryEntry) {
   assert.equal(activeExample.id, example.id, `${example.id}: active metadata id must match registry id`);
   assert.equal(activeExample.name, example.name, `${example.id}: active metadata name must match registry name`);
   assert.equal(activeExample.path, example.path, `${example.id}: active metadata path must match registry path`);
-  assert.deepEqual(activeExample.contentFiles, registryEntry.contentFiles, `${example.id}: active metadata content files must match registry content files`);
+  assert.deepEqual([...activeExample.contentFiles], [...registryEntry.contentFiles], `${example.id}: active metadata content files must match registry content files`);
 }
 
 function validateConfig(context, example) {
@@ -155,7 +155,7 @@ bundledExamples.forEach((example) => {
   assertString(example.description, `${example.id}: registry description`);
   assertString(example.entry, `${example.id}: registry entry`);
   assert.ok(Array.isArray(example.contentFiles), `${example.id}: registry contentFiles must be an array`);
-  assert.deepEqual(example.contentFiles, ["game.config.js", "items.js", "enemies.js", "zones.js"], `${example.id}: registry contentFiles must use the required example file order`);
+  assert.deepEqual([...example.contentFiles], ["game.config.js", "items.js", "enemies.js", "zones.js"], `${example.id}: registry contentFiles must use the required example file order`);
 
   const context = createBrowserContext();
   context.DEPTH_ENGINE_EXAMPLE_REGISTRY = registry;
