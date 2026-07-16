@@ -18,6 +18,7 @@ node smoke_example_selection_contract.mjs
 node smoke_depth_engine_core.mjs
 node smoke_save_stage_cap_contract.mjs
 node smoke_save_player_repair_contract.mjs
+node smoke_save_version_compatibility_contract.mjs
 node smoke_rat_cellar_content.mjs
 node smoke_registered_examples_content.mjs
 node smoke_depth_kit_lab_example.mjs
@@ -45,6 +46,7 @@ Current status: active reusable-engine prototype. The project is proving bundled
 - Exported save files come from the active example's `GAME_CONFIG.exportFileName`.
 - The stage-based combat loop, XP gain, currency, loot, equipment, selling, save, export/import, and reset flows are working.
 - Equipment changes remove one selected inventory entry at a time, so duplicate item ids remain safe.
+- Save versions are classified as legacy, current, future, or malformed without blocking load or import behavior.
 - GitHub Actions now runs all smoke scripts on pushes to `main` and on pull requests.
 - Save schema rules, trusted rendering assumptions, foundation hardening checks, loader mode, hooks, content authoring, release workflow, example-pack rules, and Depth Kit Lab guidance are documented under `docs/`.
 - Agent owner lanes for future work are documented in [`AGENTS.md`](AGENTS.md).
@@ -84,12 +86,13 @@ node smoke_example_selection_contract.mjs
 node smoke_depth_engine_core.mjs
 node smoke_save_stage_cap_contract.mjs
 node smoke_save_player_repair_contract.mjs
+node smoke_save_version_compatibility_contract.mjs
 node smoke_rat_cellar_content.mjs
 node smoke_registered_examples_content.mjs
 node smoke_depth_kit_lab_example.mjs
 ```
 
-The index static smoke guards required DOM ids and the selected-example loader contract. The example selection smoke guards default Rat Cellar startup, Arena Waves selection, invalid-selection fallback, and reload behavior. The save smokes guard configured stage-cap ownership and repair of malformed player fields. The registered-example smoke validates every bundled example listed in `examples/examples.manifest.js`. The Depth Kit Lab smoke guards the pocket-loop example's registry entry, save identity, export filename, short route map, reward flow, and upgrade-flavored Depth Kit item path.
+The index static smoke guards required DOM ids and the selected-example loader contract. The example selection smoke guards default Rat Cellar startup, Arena Waves selection, invalid-selection fallback, and reload behavior. The save smokes guard configured stage-cap ownership, repair of malformed player fields, and read-only classification of legacy, current, future, and malformed save versions. The registered-example smoke validates every bundled example listed in `examples/examples.manifest.js`. The Depth Kit Lab smoke guards the pocket-loop example's registry entry, save identity, export filename, short route map, reward flow, and upgrade-flavored Depth Kit item path.
 
 ## Starter And Release Guidance
 
