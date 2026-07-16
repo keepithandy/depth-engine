@@ -5,9 +5,9 @@ window.normalizeSaveState = function normalizeSaveState(data) {
   const { currentFloor, floor, maxFloor, ...sourceWithoutLegacyStage } = source;
   const activeExample = window.getActiveExample?.() || { id: "example" };
   const player = { ...window.GAME_CONFIG.basePlayer, ...(source.player || {}) };
-  const maxStageSource = source.maxStage ?? maxFloor ?? base.maxStage;
-  const maxStageValue = Number(maxStageSource);
-  const maxStage = Number.isFinite(maxStageValue) ? Math.max(1, Math.floor(maxStageValue)) : base.maxStage;
+  // The active example configuration owns the progression cap. Saved maxStage/maxFloor
+  // values are compatibility inputs only and must not redefine the current route.
+  const maxStage = base.maxStage;
   const stageSource = source.currentStage ?? currentFloor ?? floor ?? base.currentStage;
   const currentStage = window.clampStage(stageSource, maxStage);
   const itemExists = (id) => typeof id === "string" && Boolean(window.getItemById(id));

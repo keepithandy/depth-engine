@@ -85,9 +85,17 @@ The current repair path accepts older stage names and converts them into the cur
 
 - `currentFloor` repairs into `currentStage`
 - `floor` repairs into `currentStage`
-- `maxFloor` repairs into `maxStage`
+- saved `maxStage` and legacy `maxFloor` values are accepted as input but do not replace the active example's configured progression cap
 
-The engine clamps repaired stage values so saves do not start below stage 1 or above the active example's max stage.
+The engine clamps repaired stage values so saves do not start below stage 1 or above the active example's configured max stage.
+
+## Progression Cap Ownership
+
+The active example configuration owns `maxStage`.
+
+A normalized save still contains `maxStage` for transparency and export compatibility, but `normalizeSaveState(data)` rewrites it from the currently loaded example. A stale, imported, or manually edited save cannot shorten or extend the active route.
+
+`currentStage` is clamped against the configured cap, and `completed` is recalculated against that same cap. This prevents an old shortened cap from claiming early completion and prevents an inflated cap from pushing progression beyond available content.
 
 ## Example Identity Repair
 
@@ -130,7 +138,7 @@ If saved log data is malformed, normalization falls back to the new-state log. I
 
 ## Completion Repair
 
-`completed` only remains true when the repaired `currentStage` is at or above `maxStage`. This prevents old or malformed saves from claiming completion too early.
+`completed` only remains true when the repaired `currentStage` is at or above the active example's configured `maxStage`. This prevents old or malformed saves from claiming completion too early.
 
 ## Version Rule
 
@@ -168,6 +176,14 @@ Use the smallest migration that keeps existing saves safe.
 - missing equipment ids are cleared
 - completion is preserved only at max stage
 - duplicate inventory ids survive equipment changes
+
+`smoke_save_stage_cap_contract.mjs` checks:
+
+- saved `maxStage` cannot extend the active example's configured cap
+- legacy `maxFloor` cannot extend the active example's configured cap
+- saved `maxStage` cannot shorten the active example's configured cap
+- `currentStage` clamps to the configured cap
+- completion cannot be claimed early through a shortened saved cap
 
 `smoke_example_selection_contract.mjs` checks:
 
