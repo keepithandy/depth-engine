@@ -14,6 +14,12 @@ depth-engine-demo-save-v1
 
 // Arena Waves
 depth-engine-arena-waves-save-v1
+
+// Sewer Patrol
+depth-engine-sewer-patrol-save-v1
+
+// Depth Kit Lab
+depth-engine-depth-kit-lab-save-v1
 ```
 
 Do not change an example's save key casually. Changing the key makes existing browser saves look missing unless a separate migration or compatibility plan exists.
@@ -28,7 +34,7 @@ depth-engine-selected-example-id
 
 This key only decides which bundled example scripts load on the next page startup.
 
-It must not be used for player progress. Player progress remains owned by the active example's `GAME_CONFIG.saveKey`, so Rat Cellar and Arena Waves do not share a save slot.
+It must not be used for player progress. Player progress remains owned by the active example's `GAME_CONFIG.saveKey`, so bundled examples do not share a save slot.
 
 ## Current Save Shape
 
@@ -107,7 +113,18 @@ This keeps the current starter forgiving while still making exported saves visib
 
 ## Player Repair
 
-The `player` object is merged over the active example's base player stats. Missing player fields fall back to `window.GAME_CONFIG.basePlayer`.
+The active example's `basePlayer` object supplies the baseline for known player fields. Missing or malformed player data falls back to that baseline.
+
+The saved `player` value must be a non-array object before its fields are considered. Normalization applies these rules:
+
+- `level` becomes an integer of at least `1`;
+- `xp` becomes a non-negative integer;
+- `maxHp` becomes a positive integer;
+- `hp` becomes an integer clamped from `0` through repaired `maxHp`;
+- `attack` and `defense` must be finite numbers or they fall back to the active example baseline;
+- `currency` becomes a non-negative integer.
+
+Unknown player fields are preserved so an example can carry additional player metadata without putting example-specific repair logic in the generic engine.
 
 ## Inventory Repair
 
@@ -167,7 +184,7 @@ Use the smallest migration that keeps existing saves safe.
 `smoke_depth_engine_core.mjs` currently checks:
 
 - export filename comes from `GAME_CONFIG.exportFileName`
-- legacy `currentFloor` and `maxFloor` repair into stage fields
+- legacy `currentFloor` repair and legacy `maxFloor` compatibility handling
 - old save versions normalize to version 3
 - invalid and missing inventory ids are filtered
 - malformed log entries are filtered
@@ -184,6 +201,15 @@ Use the smallest migration that keeps existing saves safe.
 - saved `maxStage` cannot shorten the active example's configured cap
 - `currentStage` clamps to the configured cap
 - completion cannot be claimed early through a shortened saved cap
+
+`smoke_save_player_repair_contract.mjs` checks:
+
+- malformed known player fields fall back to the active example baseline;
+- HP clamps against repaired `maxHp`;
+- level, XP, and currency normalize to safe integers;
+- valid finite attack and defense values remain unchanged;
+- unknown player extension fields survive normalization;
+- array player payloads fall back to the active example baseline.
 
 `smoke_example_selection_contract.mjs` checks:
 

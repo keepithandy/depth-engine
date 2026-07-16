@@ -4,7 +4,24 @@ window.normalizeSaveState = function normalizeSaveState(data) {
   // Legacy saves may contain floor/currentFloor/maxFloor; repair them into stage fields.
   const { currentFloor, floor, maxFloor, ...sourceWithoutLegacyStage } = source;
   const activeExample = window.getActiveExample?.() || { id: "example" };
-  const player = { ...window.GAME_CONFIG.basePlayer, ...(source.player || {}) };
+  const sourcePlayer = source.player && typeof source.player === "object" && !Array.isArray(source.player)
+    ? source.player
+    : {};
+  const finiteNumberOr = (value, fallback) => {
+    return typeof value === "number" && Number.isFinite(value) ? value : fallback;
+  };
+  const maxHp = Math.max(1, Math.floor(finiteNumberOr(sourcePlayer.maxHp, base.player.maxHp)));
+  const player = {
+    ...base.player,
+    ...sourcePlayer,
+    level: Math.max(1, Math.floor(finiteNumberOr(sourcePlayer.level, base.player.level))),
+    xp: Math.max(0, Math.floor(finiteNumberOr(sourcePlayer.xp, base.player.xp))),
+    hp: Math.min(maxHp, Math.max(0, Math.floor(finiteNumberOr(sourcePlayer.hp, base.player.hp)))),
+    maxHp,
+    attack: finiteNumberOr(sourcePlayer.attack, base.player.attack),
+    defense: finiteNumberOr(sourcePlayer.defense, base.player.defense),
+    currency: Math.max(0, Math.floor(finiteNumberOr(sourcePlayer.currency, base.player.currency)))
+  };
   // The active example configuration owns the progression cap. Saved maxStage/maxFloor
   // values are compatibility inputs only and must not redefine the current route.
   const maxStage = base.maxStage;
