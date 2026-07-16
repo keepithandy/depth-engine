@@ -28,6 +28,9 @@ jobs:
       - name: Run core smoke test
         run: node smoke_depth_engine_core.mjs
 
+      - name: Run save stage-cap contract smoke test
+        run: node smoke_save_stage_cap_contract.mjs
+
       - name: Run Rat Cellar content smoke test
         run: node smoke_rat_cellar_content.mjs
 
