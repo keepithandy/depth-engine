@@ -62,5 +62,20 @@ window.DEPTH_ENGINE_EXAMPLE_REGISTRY = [
     ],
     playable: true,
     bundled: true
+  },
+  {
+    id: "crystal-mines",
+    name: "Crystal Mines",
+    path: "examples/crystal-mines",
+    description: "Documentation-driven example proving a new RPG theme can be added without editing generic engine files.",
+    entry: "examples/crystal-mines/example.meta.js",
+    contentFiles: [
+      "game.config.js",
+      "items.js",
+      "enemies.js",
+      "zones.js"
+    ],
+    playable: true,
+    bundled: true
   }
 ];
