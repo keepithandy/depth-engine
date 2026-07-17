@@ -31,8 +31,11 @@ Use this when the new RPG should stand on its own.
 5. Replace item, enemy, and zone data.
 6. Add the new example to `examples/examples.manifest.js`.
 7. Keep the content file order consistent.
-8. Open `index.html` directly and verify the selected example loads.
-9. Run the smoke checks.
+8. Open `index.html?example=<example-id>` directly through a `file://` path.
+9. Run the complete smoke list.
+10. Add a focused smoke when the example proves a named checkpoint.
+
+Crystal Mines follows this exact path as the v0.7 documentation-driven proof.
 
 ## Files That Own Theme Identity
 
@@ -54,7 +57,7 @@ Generic behavior belongs in:
 
 ## Required Example Metadata
 
-Every bundled example should have a unique:
+Every bundled example must have a unique:
 
 - `id`
 - `name`
@@ -62,18 +65,16 @@ Every bundled example should have a unique:
 - `GAME_CONFIG.saveKey`
 - `GAME_CONFIG.exportFileName`
 
-Use a save key and export filename that cannot collide with another example.
-
 Example:
 
 ```js
-saveKey: "depth-engine-crystal-mines-save",
+saveKey: "depth-engine-crystal-mines-save-v1",
 exportFileName: "crystal-mines-save.json"
 ```
 
 ## Required Content File Order
 
-Bundled examples should use this content file order:
+Bundled examples must use:
 
 ```js
 [
@@ -99,18 +100,23 @@ Do not put theme-specific content into:
 - `js/engine/content-loader.js`
 - `js/engine/example-loader.js`
 
-Those files should stay reusable across every example.
+Those files must stay reusable across every example.
 
 ## Smoke Checks
 
-Run these from the repo root after changing or adding an example:
+Run these from the repository root after changing or adding an example:
 
 ```bash
 node smoke_index_static_contract.mjs
 node smoke_example_selection_contract.mjs
 node smoke_depth_engine_core.mjs
+node smoke_save_stage_cap_contract.mjs
+node smoke_save_player_repair_contract.mjs
+node smoke_save_version_compatibility_contract.mjs
 node smoke_rat_cellar_content.mjs
 node smoke_registered_examples_content.mjs
+node smoke_depth_kit_lab_example.mjs
+node smoke_crystal_mines_example.mjs
 ```
 
 At minimum, new bundled example work must pass:
@@ -119,15 +125,20 @@ At minimum, new bundled example work must pass:
 node smoke_registered_examples_content.mjs
 ```
 
+A named proof example should also have its own focused smoke.
+
 ## Safe Starter Checklist
 
 Before treating the customized starter as ready:
 
-- `index.html` opens directly in a browser.
-- The intended example loads.
-- The active example name is visible in the UI.
+- Start from a clean checkout or source archive.
+- `index.html` opens directly through `file://`.
+- The intended example loads without console errors.
+- The active example name and progression label are visible.
 - The save slot is unique to the example.
-- Exported save filename is unique to the example.
-- Every stage from `1` through `GAME_CONFIG.maxStage` has a zone.
+- The export filename is unique to the example.
+- Every stage from `1` through `GAME_CONFIG.maxStage` has one zone.
+- Every zone references a valid enemy.
+- Every loot id references a valid item.
 - Engine files still avoid theme-specific lore.
-- Smoke checks pass.
+- The full smoke workflow passes after a fresh checkout.

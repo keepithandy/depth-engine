@@ -2,108 +2,99 @@
 
 ## Four-Phase Plan
 
-1. Foundation: protect the working starter, direct browser startup, save reliability, generic engine boundaries, and the playable Rat Cellar example.
-2. Extensibility: add safer multi-example loading and lightweight extension points without forcing a framework or build step.
-3. Developer Experience: improve docs, smoke tests, workflows, examples, and contributor guidance.
-4. Ecosystem: grow reusable examples, templates, starter packs, and community-facing packages after the core is stable.
+1. **Foundation** — protect direct browser startup, save reliability, generic engine boundaries, and the playable core loop.
+2. **Extensibility** — prove multiple local examples and add only narrowly justified extension seams.
+3. **Developer Experience** — synchronize docs, smoke tests, release gates, and customization guidance.
+4. **Ecosystem** — grow reusable starter material only after the core is dependable.
 
 ## Completed Checkpoints
 
 ### v0.1 Working Prototype
 
-- Rat Cellar example prototype is playable.
-- Core stage progression, fight, loot, inventory, and save loops work.
+- Rat Cellar is playable.
+- Core stage progression, fight, loot, inventory, equipment, and save loops work.
 
 ### v0.2 Depth Engine Identity And Documentation
 
-- Reframe the repo as Depth Engine, an open-source bare HTML RPG engine.
-- Add README, contributing, roadmap, and principles docs.
-- Make the visible UI describe the engine and loaded example clearly.
-- Remove misleading idle/incremental language from the public-facing identity.
+- Reframed the repository as a bare HTML RPG engine starter.
+- Added README, contribution, roadmap, and principles documentation.
+- Removed misleading idle/incremental identity language.
 
 ### v0.3 Content Separation Hardening
 
-- Move active example identity into `examples/rat-cellar/example.meta.js`.
-- Keep `js/engine/content-loader.js` generic and metadata-driven.
-- Preserve direct `index.html` startup and manual script loading.
-- Keep Rat Cellar playable.
-- Guard against Rat Cellar-specific terms leaking into `js/engine/`.
-- Rename the default exported save file away from old IdleForge branding.
-- Update docs for the current engine-vs-example boundary.
+- Moved active example identity and content under `examples/`.
+- Kept `js/engine/` generic.
+- Preserved direct `index.html` startup.
+- Added boundary smoke coverage.
 
 ### v0.4 Multi-Example Loader Foundation
 
-- Add `examples/examples.manifest.js` as the browser-friendly example registry.
-- Keep Rat Cellar registered as Example Game #1.
-- Add generic registry helpers in `js/engine/content-loader.js`.
-- Add a simple way to switch between bundled example content sets.
-- Preserve direct `index.html` startup and manual script loading.
-- Guard the registry and active-example relationship in smoke tests.
+- Added `examples/examples.manifest.js`.
+- Added local selected-example loading without `fetch()` or a server.
+- Added registry and selection contracts.
 
 ### v0.5 Bundled Example Expansion
 
-- Add Arena Waves and Sewer Patrol as selectable bundled examples.
-- Prove that themes can replace stage labels, content, and presentation without engine-specific rewrites.
-- Keep each example isolated through its own save key and export filename.
-- Expand registered-example smoke coverage and documentation.
+- Added Arena Waves and Sewer Patrol.
+- Proved themes can replace labels, routes, enemies, items, rewards, save keys, and export filenames without engine-specific rewrites.
 
 ### v0.6 Depth Kit Lab Pocket Loop
 
-- Add Depth Kit Lab as a selectable six-depth prototype.
-- Prove a compact prepare, delve, loot, upgrade, repeat loop using the existing generic runtime.
-- Keep Depth labels, Shards currency, route data, enemies, rewards, and equipment content-owned.
-- Add dedicated smoke coverage for registry identity, save identity, export naming, route length, reward flow, and Depth Kit item progression.
-- Document the example as a short manual testbed for starter users and future engine work.
+- Added Depth Kit Lab as a short six-depth prototype.
+- Proved prepare, delve, loot, upgrade, repeat pacing through existing generic systems.
+- Added dedicated content and reward-flow coverage.
 
-## Next Planned Lanes
+### Save Compatibility Hardening
 
-### Save Schema And Compatibility Hardening
+- Made active example configuration authoritative for progression caps.
+- Repaired malformed saved player fields.
+- Added a canonical save version and read-only compatibility classification.
+- Preserved legacy normalization without destructive future-save behavior.
 
-- Continue formalizing save structure, versioning, and migration rules.
-- Add compatibility guidance for future content changes.
-- Keep example save identities isolated and trustworthy.
-- Add focused regression coverage before any schema-affecting runtime change.
+## Current Checkpoint
 
-### Hooks And Plugin Foundation
+### v0.7 Stable Starter Release Candidate
 
-- Introduce lightweight extension hooks only where a proven use case exists.
-- Keep the base engine small and generic.
-- Avoid hard-coding theme-specific logic into the core.
-- Preserve direct-file startup and the no-build-step starter path.
+The goal is to prove the starter is dependable to clone, launch, understand, customize, and validate.
 
-### Developer Experience Follow-Up
+Required evidence:
 
-- Keep the quickstart, example authoring guidance, and smoke commands synchronized with the active checkpoint.
-- Add contributor-facing checks when a recurring failure mode justifies them.
-- Prefer narrow examples and contracts over broad framework adoption.
+- synchronized release-readiness checklist;
+- complete fresh-checkout GitHub Actions smoke run;
+- direct `file://` browser launch without console errors;
+- manual validation of example selection, combat, save/load, export/import, and reset;
+- five bundled examples resolving through the generic loader;
+- Crystal Mines created through the public customization guide without engine edits;
+- focused Crystal Mines smoke coverage;
+- named release notes tied to the tested commit;
+- no package manager, build step, local server, or remote loader requirement.
 
-## Phase 4 Public Starter Planning
+This checkpoint is a release candidate, not yet a permanent compatibility promise or a package publication.
 
-See [`docs/public-starter-release.md`](docs/public-starter-release.md) for the public starter release strategy.
+## After v0.7
 
-Before Depth Engine is presented as a stable public starter, the project should define:
+### Stabilization And Outside-User Validation
 
-- what `v1.0 stable starter` means
-- whether releases stay clone-first or eventually include downloadable starter ZIPs
-- how engine, example, docs, save, and breaking changes are versioned
-- what the public quickstart must prove
-- what screenshots or demo materials are useful without turning the repo into a marketing-heavy project
-- which packaging ideas are explicitly not approved yet
+- Have another developer clone or download the starter and follow the quickstart.
+- Record documentation confusion, startup failures, or customization friction.
+- Prefer narrow corrective patches over new systems.
 
-Current Phase 4 stance:
+### Read-Only Hook Proof
 
-- Keep the repo clone-first.
-- Preserve direct `index.html` startup.
-- Do not introduce npm package management for release packaging unless separately approved.
-- Do not publish packages before save/version rules are trustworthy.
-- Treat examples as repo-owned starter content until the loader and authoring guidance are mature enough to split them out.
+- Introduce a hook only when a concrete diagnostic or notification use case requires it.
+- Start with read-only events such as `afterStateLoad`, `afterFightResolution`, or `afterExampleSelection`.
+- Keep the core loop functional with zero hooks.
+- Do not add mutation-capable plugins, remote loading, or dependency injection during the starter stabilization period.
 
-## v1.0 Stable Open RPG Engine Starter
+### v1.0 Stable Open RPG Engine Starter
 
-- Present a stable starter engine for browser RPG projects.
-- Keep the included examples simple, readable, and easy to replace.
-- Treat the repo as an engine foundation rather than a single game.
-- Include a public quickstart that proves the starter runs without dependencies.
-- Include a release readiness checklist before calling the starter stable.
-- Document versioning expectations for engine, example, docs, save, and breaking changes.
-- Avoid package publishing or long-term compatibility promises until release rules are ready.
+To qualify for v1.0:
+
+- the v0.7 release gate must remain repeatable;
+- outside-user startup and customization must succeed;
+- save and version policies must be explicit;
+- direct browser startup must remain supported;
+- public quickstart and release documentation must match the tested repository;
+- known support boundaries must be stated clearly.
+
+v1.0 does not require npm publishing, CLI scaffolding, a visual editor, a plugin marketplace, or multiple polished games.

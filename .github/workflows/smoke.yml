@@ -45,3 +45,6 @@ jobs:
 
       - name: Run Depth Kit Lab content smoke test
         run: node smoke_depth_kit_lab_example.mjs
+
+      - name: Run Crystal Mines documentation-proof smoke test
+        run: node smoke_crystal_mines_example.mjs
