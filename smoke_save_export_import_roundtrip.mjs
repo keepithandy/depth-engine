@@ -86,7 +86,7 @@ assert.equal(rendered, 1, "import should render once");
 
 await assert.rejects(
   () => context.importSave({ text: async () => "{bad json" }),
-  SyntaxError,
+  (error) => error?.name === "SyntaxError",
   "malformed JSON should reject"
 );
 
