@@ -92,6 +92,11 @@ window.render = function render() {
 
 function boot() {
   window.GameState = window.loadGame();
+  window.runDepthEngineHook?.("afterStateLoad", {
+    exampleId: window.getActiveExample?.().id || window.GameState.exampleId,
+    stateSnapshot: window.cloneState(window.GameState)
+  });
+
   const fightBtn = document.getElementById("fightBtn");
   const exportBtn = document.getElementById("exportSaveBtn");
   const resetBtn = document.getElementById("resetSaveBtn");
