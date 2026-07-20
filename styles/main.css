@@ -115,7 +115,7 @@ h1 { margin-bottom: 0.35rem; font-size: clamp(2rem, 4vw, 3.5rem); overflow-wrap:
 }
 
 @media (max-width: 640px) {
-  .app-shell, .app-footer { width: min(100% - 1rem, 1080px); }
+  .app-shell, .app-footer { width: min(1080px, calc(100% - 1rem)); }
   .app-shell { padding-top: 0.5rem; }
   .hero { padding: 1rem; flex-direction: column; align-items: stretch; }
   .save-actions { display: grid; grid-template-columns: 1fr; justify-content: stretch; }
