@@ -7,27 +7,28 @@
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-  <main class="app-shell">
+  <a class="skip-link" href="#mainContent">Skip to game controls</a>
+  <main id="mainContent" class="app-shell" tabindex="-1">
     <header class="hero">
       <div>
         <p class="eyebrow">Depth Engine</p>
         <h1>Depth Engine</h1>
-        <p class="subtitle">Bare HTML RPG engine core. <span id="loadedExampleText">Loaded Example: Example Content</span>. Clear Stage <span id="goalStageHeadline">-</span> to finish the run.</p>
+        <p class="subtitle">Bare HTML RPG engine core. <span id="loadedExampleText" role="status" aria-live="polite">Loaded Example: Example Content</span>. Clear Stage <span id="goalStageHeadline">-</span> to finish the run.</p>
       </div>
-      <div class="save-actions">
+      <div class="save-actions" aria-label="Save controls">
         <button id="exportSaveBtn" type="button">Export Save</button>
         <label class="import-label">
           <span>Import Save</span>
-          <input id="importSaveInput" type="file" accept="application/json">
+          <input id="importSaveInput" type="file" accept="application/json" aria-label="Choose a Depth Engine save file to import">
         </label>
         <button id="resetSaveBtn" type="button" class="danger">Reset Save</button>
       </div>
     </header>
 
-    <section class="grid">
+    <section class="grid" aria-label="Depth Engine game panels">
       <article class="panel stats-panel">
         <h2>Hero</h2>
-        <div id="playerStats" class="stats"></div>
+        <div id="playerStats" class="stats" aria-label="Player statistics"></div>
         <div class="progress">
           <div class="progress-label">
             <span>Zone</span>
@@ -39,37 +40,37 @@
             <span>XP</span>
             <span id="xpText"></span>
           </div>
-          <div class="bar"><div id="xpBar" class="bar-fill"></div></div>
+          <div class="bar" aria-hidden="true"><div id="xpBar" class="bar-fill"></div></div>
         </div>
         <div class="progress">
           <div class="progress-label">
             <span>Goal Stage</span>
             <span id="stageText"></span>
           </div>
-          <div class="bar"><div id="stageBar" class="bar-fill stage"></div></div>
+          <div class="bar" aria-hidden="true"><div id="stageBar" class="bar-fill stage"></div></div>
         </div>
       </article>
 
       <article class="panel example-panel">
         <h2>Registered Examples</h2>
-        <p class="muted">Switching examples uses a separate save slot. Your current example save stays intact.</p>
-        <div id="exampleRegistryList" class="example-list"></div>
+        <p id="exampleSelectorHelp" class="muted">Switching examples uses a separate save slot. Your current example save stays intact.</p>
+        <div id="exampleRegistryList" class="example-list" aria-describedby="exampleSelectorHelp" aria-label="Registered example selector"></div>
       </article>
 
       <article class="panel encounter-panel">
         <h2>Current Stage</h2>
-        <div id="enemyPreview" class="preview-card"></div>
-        <div class="combat-actions">
+        <div id="enemyPreview" class="preview-card" aria-label="Current enemy and rewards"></div>
+        <div class="combat-actions" aria-label="Combat controls">
           <button id="fightBtn" type="button" class="primary">Fight</button>
         </div>
-        <div id="combatLog" class="log" aria-live="polite"></div>
+        <div id="combatLog" class="log" role="log" aria-live="polite" aria-relevant="additions text" aria-label="Combat status log"></div>
       </article>
 
       <article class="panel inventory-panel">
         <h2>Equipment</h2>
-        <div id="equipmentSlots" class="equipment"></div>
+        <div id="equipmentSlots" class="equipment" aria-label="Equipped items"></div>
         <h2>Inventory</h2>
-        <div id="inventoryList" class="inventory"></div>
+        <div id="inventoryList" class="inventory" aria-label="Inventory items and actions"></div>
       </article>
     </section>
   </main>
@@ -82,6 +83,7 @@
   <script src="js/engine/example-loader.js"></script>
 
   <!-- Engine systems -->
+  <script src="js/engine/hooks.js"></script>
   <script src="js/engine/state.js"></script>
   <script src="js/engine/save.js"></script>
   <script src="js/engine/loot.js"></script>
